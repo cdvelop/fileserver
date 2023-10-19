@@ -6,14 +6,14 @@ import (
 	"os"
 )
 
-func fileStore(file multipart.File, upload_folder, file_name string) error {
+func fileStore(file multipart.File, upload_folder, file_name, extension string) error {
 
 	err := os.MkdirAll(upload_folder, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	dst, err := os.Create(upload_folder + "/" + file_name)
+	dst, err := os.Create(upload_folder + "/" + file_name + extension)
 	if err != nil {
 		return err
 	}

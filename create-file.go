@@ -51,9 +51,9 @@ func CreateFileInServer(r *http.Request, o *model.Object, form_data map[string]s
 			return nil, err
 		}
 
-		file_name := o.FileName(extension)
+		file_name := o.FileName()
 
-		err = fileStore(file, upload_folder, file_name)
+		err = fileStore(file, upload_folder, file_name, extension)
 		if err != nil {
 			return nil, err
 		}
