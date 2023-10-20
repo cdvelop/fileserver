@@ -15,7 +15,7 @@ func (d *dataTest) readFileTest(in model.Response, t *testing.T) {
 		for _, data := range in.Data {
 			d.Endpoint = "/file/" + d.file.Object.Name
 
-			new_data := map[string]string{"id_file": data["id_file"]}
+			new_data := map[string]string{d.pk_name: data[d.pk_name]}
 
 			responses, code, err := d.Get(new_data)
 
@@ -41,7 +41,7 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 		for _, data := range in.Data {
 			d.Endpoint = "/read/" + d.file.Object.Name
 
-			new_data := map[string]string{"id_file": data["id_file"]}
+			new_data := map[string]string{d.pk_name: data[d.pk_name]}
 
 			responses, code, err := d.Get(new_data)
 
@@ -53,13 +53,13 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 
 			for i, resp := range responses {
 
-				if id, folder_id := resp.Data[i]["folder_id"]; !folder_id {
+				if id, folder_id := resp.Data[i][d.file.Folder_id]; !folder_id {
 					log.Fatalln("se esperaba recuperar folder id")
 				} else {
-					folders_ids = append(folders_ids, map[string]string{"folder_id": id})
+					folders_ids = append(folders_ids, map[string]string{d.file.Folder_id: id})
 				}
 
-				if path, file_path := resp.Data[i]["file_path"]; file_path {
+				if path, file_path := resp.Data[i][d.file.File_path]; file_path {
 					log.Fatalln("error de seguridad servidor de archivos. no se espera recibir la ruta del archivo como respuesta de lectura al cliente ej:", path)
 				}
 
@@ -93,7 +93,7 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 				// 	log.Fatalln("error no se espera recibir nuevamente el dato folder_id")
 				// }
 
-				if path, file_path := resp.Data[i]["file_path"]; file_path {
+				if path, file_path := resp.Data[i][d.file.File_path]; file_path {
 					log.Fatalln("error de seguridad no se espera recibir la ruta del archivo en el servidor ", path)
 				}
 
