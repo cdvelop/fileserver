@@ -13,9 +13,9 @@ func (d *dataTest) readFileTest(in model.Response, t *testing.T) {
 
 		// fmt.Println("DATA A ENVIAR PARA LECTURA: ", in.Data)
 		for _, data := range in.Data {
-			d.Endpoint = "/file/" + d.file.Object.Name
+			d.Endpoint = "/file"
 
-			new_data := map[string]string{d.pk_name: data[d.pk_name]}
+			new_data := map[string]string{"id": data[d.pk_name]}
 
 			responses, code, err := d.Get(new_data)
 
