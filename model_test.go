@@ -14,8 +14,8 @@ type dataTest struct {
 	field_name string   //ej: endoscopia, voucher, foto_mascota, foto_usuario
 	files      []string //ej: "gatito.jpg, perro.png"
 	file_type  string   //ej: imagen,video,document,pdf
-	max_files  string
-	max_size   string
+	max_files  int64
+	max_size   int64
 
 	expected string
 

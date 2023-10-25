@@ -16,10 +16,9 @@ import (
 
 var (
 	dataHttp = map[string]dataTest{
-
-		"crear 2 archivos gatito 220kb y dino 36kb": {field_name: "endoscopia", files: []string{"dino.png", "gatito.jpeg"}, file_type: "imagen", max_files: "2", max_size: "262", expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-		"gatito 220kb ok": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: "1", max_size: "220", expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-		"tamaño gatito 220kb y permitido 200 se espera error": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: "1", max_size: "200", expected: "error", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
+		"crear 2 archivos gatito 220kb y dino 36kb": {field_name: "endoscopia", files: []string{"dino.png", "gatito.jpeg"}, file_type: "imagen", max_files: 2, max_size: 262, expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
+		"gatito 220kb ok": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: 1, max_size: 220, expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
+		"tamaño gatito 220kb y permitido 200 se espera error": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: 1, max_size: 200, expected: "error", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
 	}
 )
 
@@ -51,7 +50,21 @@ func Test_CrudFILE(t *testing.T) {
 				Inputs:     []*model.Input{},
 			}
 
-			data.file, err = fileinput.New(data.Module, db, "field_name:"+data.field_name, "root_folder:"+root_test_folder, "max_files:"+data.max_files, "max_kb_size:"+data.max_size)
+			newConfig := model.FileConfig{
+				MaximumFilesAllowed: data.max_files,
+				InputNameWithFiles:  "",
+				MaximumFileSize:     0,
+				MaximumKbSize:       data.max_size,
+				AllowedExtensions:   "",
+				RootFolder:          root_test_folder,
+				FileType:            "",
+				IdFieldName:         "",
+				Name:                data.field_name,
+				Legend:              "",
+				TabIndexNumber:      "",
+			}
+
+			data.file, err = fileinput.New(data.Module, db, newConfig)
 			if err != nil {
 				t.Fatal(err)
 			}
