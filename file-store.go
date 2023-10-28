@@ -4,16 +4,18 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+
+	"github.com/cdvelop/model"
 )
 
-func fileStore(file multipart.File, upload_folder, file_name, extension string) error {
+func fileStore(file multipart.File, f *model.FileNewToStore) error {
 
-	err := os.MkdirAll(upload_folder, os.ModePerm)
+	err := os.MkdirAll(f.UploadFolder, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	dst, err := os.Create(upload_folder + "/" + file_name + extension)
+	dst, err := os.Create(f.UploadFolder + "/" + f.FileNameOnDisk + f.Extension)
 	if err != nil {
 		return err
 	}

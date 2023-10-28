@@ -2,7 +2,8 @@ package fileserver
 
 import "mime/multipart"
 
-func getExtension(fileHeader *multipart.FileHeader) string {
+// obtener extension sin punto ej: jpg,avi,mpg,mp4
+func getExtensionOnly(fileHeader *multipart.FileHeader) string {
 	buff := make([]byte, 512)
 	file, err := fileHeader.Open()
 	if err != nil {

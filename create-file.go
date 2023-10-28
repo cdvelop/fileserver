@@ -10,7 +10,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func CreateFileInServer(r *http.Request, o *model.Object, form_data map[string]string) ([]map[string]string, error) {
+func CreateFileInServer(r *http.Request, o *model.Object, user_area_file string, form_data map[string]string) ([]map[string]string, error) {
 
 	f := o.ConfigFile()
 
@@ -39,30 +39,35 @@ func CreateFileInServer(r *http.Request, o *model.Object, form_data map[string]s
 		}
 		defer file.Close()
 
-		extension := getExtension(fileHeader)
+		new := model.FileNewToStore{
+			DescriptionInputName: fileHeader.Filename,
+			UploadFolder:         upload_folder,
+			FileNameOnDisk:       o.GenerateFileNameOnDisk(),
+			FileArea:             user_area_file,
+			Extension:            getExtensionOnly(fileHeader),
+		}
 
-		if !strings.Contains(f.AllowedExtensions, extension) {
+		if !strings.Contains(f.AllowedExtensions, new.Extension) {
 			return nil, model.Error("formato de archivo no valido solo se admiten:", f.AllowedExtensions)
 		}
-		extension = filepath.Ext(fileHeader.Filename)
+		// obtengo extension original con punto
+		new.Extension = filepath.Ext(fileHeader.Filename)
 
 		_, err = file.Seek(0, io.SeekStart)
 		if err != nil {
 			return nil, err
 		}
 
-		file_name := o.FileName()
-
-		err = fileStore(file, upload_folder, file_name, extension)
+		err = fileStore(file, &new)
 		if err != nil {
 			return nil, err
 		}
 
-		out, err := o.RegisterNewFile(fileHeader.Filename, upload_folder, file_name, extension, form_data)
+		out, err := o.RegisterNewFile(&new, form_data)
 		if err != nil {
 
 			//borrar archivo creado en disco
-			err2 := os.Remove(upload_folder + "/" + file_name)
+			err2 := os.Remove(upload_folder + "/" + new.FileNameOnDisk)
 			if err2 != nil {
 				return nil, model.Error(err, err2)
 			}

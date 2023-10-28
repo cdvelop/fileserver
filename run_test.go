@@ -61,10 +61,10 @@ func Test_CrudFILE(t *testing.T) {
 				IdFieldName:         "",
 				Name:                data.field_name,
 				Legend:              "",
-				TabIndexNumber:      "",
 			}
+			h := model.Handlers{}
 
-			data.file, err = fileinput.New(data.Module, db, newConfig)
+			data.file, err = fileinput.New(data.Module, db, newConfig, &h)
 			if err != nil {
 				t.Fatal(err)
 			}

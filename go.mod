@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/cdvelop/api v0.0.37
 	github.com/cdvelop/cutkey v0.6.0
-	github.com/cdvelop/fileinput v0.0.9
+	github.com/cdvelop/fileinput v0.0.12
 	github.com/cdvelop/gotools v0.0.48
 	github.com/cdvelop/sqlite v0.0.68
 	github.com/gabriel-vasile/mimetype v1.4.3
@@ -17,7 +17,7 @@ require (
 	github.com/cdvelop/object v0.0.17 // indirect
 	github.com/cdvelop/objectdb v0.0.73 // indirect
 	github.com/cdvelop/output v0.0.8 // indirect
-	github.com/cdvelop/strings v0.0.2 // indirect
+	github.com/cdvelop/strings v0.0.3 // indirect
 	github.com/cdvelop/timeserver v0.0.8 // indirect
 	github.com/cdvelop/timetools v0.0.9 // indirect
 	github.com/cdvelop/unixid v0.0.9 // indirect
@@ -26,7 +26,7 @@ require (
 )
 
 require (
-	github.com/cdvelop/model v0.0.59
+	github.com/cdvelop/model v0.0.61
 	github.com/cdvelop/testools v0.0.25
 	golang.org/x/net v0.17.0 // indirect
 )
