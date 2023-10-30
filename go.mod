@@ -3,7 +3,7 @@ module github.com/cdvelop/fileserver
 go 1.20
 
 require (
-	github.com/cdvelop/api v0.0.0-00010101000000-000000000000
+	github.com/cdvelop/api v0.0.44
 	github.com/cdvelop/cutkey v0.6.0
 	github.com/cdvelop/fileinput v0.0.14
 	github.com/cdvelop/gotools v0.0.51
