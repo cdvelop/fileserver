@@ -2,7 +2,6 @@ package fileserver_test
 
 import (
 	"github.com/cdvelop/fileinput"
-	"github.com/cdvelop/model"
 	"github.com/cdvelop/testools"
 )
 
@@ -18,8 +17,6 @@ type dataTest struct {
 	max_size   int64
 
 	expected string
-
-	*model.Module
 
 	*testools.Request
 }

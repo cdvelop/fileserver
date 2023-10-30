@@ -2,7 +2,6 @@ package fileserver_test
 
 import (
 	"fmt"
-	"log"
 	"testing"
 
 	"github.com/cdvelop/model"
@@ -12,7 +11,8 @@ import (
 func (d *dataTest) updateTest(r model.Response, t *testing.T) {
 	t.Run("UPDATE Test:", func(t *testing.T) {
 
-		// fmt.Println("DATA A ACTUALIZAR: ", rq)
+		// fmt.Println("DATA A ACTUALIZAR: ", r)
+
 		for _, data := range r.Data {
 			data[d.file.Description] = "perro"
 		}
@@ -23,7 +23,7 @@ func (d *dataTest) updateTest(r model.Response, t *testing.T) {
 
 		responses, _, err := d.CutPost()
 		if err != nil {
-			log.Fatal(err)
+			t.Fatal(err)
 		}
 
 		for i, resp := range responses {
@@ -31,7 +31,7 @@ func (d *dataTest) updateTest(r model.Response, t *testing.T) {
 
 			if resp.Data[i][d.file.Description] != "perro" {
 				fmt.Printf("se esperaba en description [perro] se obtuvo: [%v]", resp.Data[i][d.file.Description])
-				log.Fatal()
+				t.Fatal()
 			}
 		}
 	})

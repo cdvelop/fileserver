@@ -50,6 +50,7 @@ func CreateFileInServer(r *http.Request, o *model.Object, user_area_file string,
 		if !strings.Contains(f.AllowedExtensions, new.Extension) {
 			return nil, model.Error("formato de archivo no valido solo se admiten:", f.AllowedExtensions)
 		}
+
 		// obtengo extension original con punto
 		new.Extension = filepath.Ext(fileHeader.Filename)
 

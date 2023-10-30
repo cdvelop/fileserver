@@ -3,35 +3,39 @@ module github.com/cdvelop/fileserver
 go 1.20
 
 require (
-	github.com/cdvelop/api v0.0.37
+	github.com/cdvelop/api v0.0.0-00010101000000-000000000000
 	github.com/cdvelop/cutkey v0.6.0
-	github.com/cdvelop/fileinput v0.0.12
-	github.com/cdvelop/gotools v0.0.48
-	github.com/cdvelop/sqlite v0.0.68
+	github.com/cdvelop/fileinput v0.0.14
+	github.com/cdvelop/gotools v0.0.51
+	github.com/cdvelop/sqlite v0.0.71
+	github.com/cdvelop/testools v0.0.28
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 
 require (
-	github.com/cdvelop/dbtools v0.0.50 // indirect
-	github.com/cdvelop/input v0.0.43 // indirect
-	github.com/cdvelop/object v0.0.17 // indirect
-	github.com/cdvelop/objectdb v0.0.73 // indirect
-	github.com/cdvelop/output v0.0.8 // indirect
-	github.com/cdvelop/strings v0.0.3 // indirect
-	github.com/cdvelop/timeserver v0.0.8 // indirect
-	github.com/cdvelop/timetools v0.0.9 // indirect
-	github.com/cdvelop/unixid v0.0.9 // indirect
+	github.com/cdvelop/dbtools v0.0.53 // indirect
+	github.com/cdvelop/input v0.0.46 // indirect
+	github.com/cdvelop/object v0.0.20 // indirect
+	github.com/cdvelop/objectdb v0.0.76 // indirect
+	github.com/cdvelop/output v0.0.11 // indirect
+	github.com/cdvelop/strings v0.0.4 // indirect
+	github.com/cdvelop/timeserver v0.0.11 // indirect
+	github.com/cdvelop/timetools v0.0.12 // indirect
+	github.com/cdvelop/unixid v0.0.12 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )
 
 require (
-	github.com/cdvelop/model v0.0.61
-	github.com/cdvelop/testools v0.0.25
+	github.com/cdvelop/model v0.0.62
 	golang.org/x/net v0.17.0 // indirect
 )
 
 replace github.com/cdvelop/model => ../model
+
+replace github.com/cdvelop/dbtools => ../dbtools
+
+replace github.com/cdvelop/testools => ../testools
 
 replace github.com/cdvelop/api => ../api
 

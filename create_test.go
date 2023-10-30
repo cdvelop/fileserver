@@ -1,9 +1,9 @@
 package fileserver_test
 
 import (
-	"log"
 	"testing"
 
+	"github.com/cdvelop/fileserver"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/testools"
 )
@@ -19,9 +19,9 @@ func (d *dataTest) create(prueba string, t *testing.T) (responses []model.Respon
 			d.file.Folder_id:   testools.RandomNumber(),
 		}
 
-		body, content_type, err := testools.MultiPartFileForm(path_files, d.file.Files, d.files, form)
+		body, content_type, err := fileserver.MultiPartFileForm(path_files, d.file.Files, d.files, form)
 		if err != nil {
-			log.Fatal(err)
+			t.Fatal(err)
 		}
 		d.ContentType = content_type
 
@@ -34,7 +34,7 @@ func (d *dataTest) create(prueba string, t *testing.T) (responses []model.Respon
 
 		responses, _, err = d.SendRequest(body.Bytes())
 		if err != nil {
-			log.Fatal(err)
+			t.Fatal(err)
 		}
 
 		for _, resp := range responses {

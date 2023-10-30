@@ -42,12 +42,20 @@ func Test_CrudFILE(t *testing.T) {
 
 			db := sqlite.NewConnection(root_test_folder, "stored_files_index.db", false)
 
-			data.Module = &model.Module{
-				ModuleName: "medical_history",
-				Title:      "Modulo Testing",
-				Areas:      []byte{},
-				Objects:    []*model.Object{},
-				Inputs:     []*model.Input{},
+			new_object := &model.Object{
+				Name:                "name_test",
+				Table:               "table_test",
+				NamePrincipalFields: []string{},
+				Fields:              []model.Field{},
+				Module: &model.Module{
+					ModuleName: "medical_history",
+					Title:      "Modulo Testing",
+					Areas:      []byte{},
+					Objects:    []*model.Object{},
+					Inputs:     []*model.Input{},
+				},
+				BackendHandler:  model.BackendHandler{},
+				FrontendHandler: model.FrontendHandler{},
 			}
 
 			newConfig := model.FileConfig{
@@ -64,19 +72,20 @@ func Test_CrudFILE(t *testing.T) {
 			}
 			h := model.Handlers{}
 
-			data.file, err = fileinput.New(data.Module, db, newConfig, &h)
+			data.file, err = fileinput.New(new_object, db, newConfig, &h)
 			if err != nil {
 				t.Fatal(err)
 			}
 			data.pk_name = data.file.Object.PrimaryKeyName()
 
 			data.Object = data.file.Object
+			// fmt.Println("OBJECT:", *data.Object)
 
-			data.Module.Objects = append(data.Module.Objects, data.Object)
+			// data.Module.Objects = append(data.Module.Objects, data.Object)
 
 			data.Cut = cutkey.Add(data.Object)
 
-			api_conf := api.Add([]*model.Module{data.Module}, nil)
+			api_conf := api.Add([]*model.Module{new_object.Module}, nil)
 
 			mux := api_conf.ServeMuxAndRoutes()
 
@@ -85,7 +94,7 @@ func Test_CrudFILE(t *testing.T) {
 
 			responses := data.create(prueba, t)
 
-			// log.Println(responses)
+			// log.Println("CREATE RESPUESTAS:", responses)
 
 			for _, response := range responses {
 
@@ -97,7 +106,7 @@ func Test_CrudFILE(t *testing.T) {
 
 					data.readTest(response, t)
 
-					// data.deleteTest(response, t)
+					data.deleteTest(response, t)
 
 				}
 			}
