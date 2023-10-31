@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/cdvelop/api v0.0.44
 	github.com/cdvelop/cutkey v0.6.0
-	github.com/cdvelop/fileinput v0.0.14
+	github.com/cdvelop/fileinput v0.0.15
 	github.com/cdvelop/gotools v0.0.51
 	github.com/cdvelop/sqlite v0.0.71
 	github.com/cdvelop/testools v0.0.30
