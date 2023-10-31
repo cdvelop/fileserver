@@ -1,6 +1,7 @@
 package fileserver
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 	"os"
@@ -59,18 +60,36 @@ func CreateFileInServer(r *http.Request, o *model.Object, user_area_file string,
 			return nil, err
 		}
 
-		err = fileStore(file, &new)
-		if err != nil {
-			return nil, err
+		if !f.SavedAsBlobInDb { // guardado local hdd
+
+			err = fileStoreInHDD(file, &new)
+			if err != nil {
+				return nil, err
+			}
+
+		} else { // guardado como binario
+			// Crear un buffer para leer el archivo
+			var buffer bytes.Buffer
+
+			// Copiar los datos del archivo en el buffer
+			_, err := io.Copy(&buffer, file)
+			if err != nil {
+				return nil, err
+			}
+
+			// Asignar los datos del buffer a new.BlobData
+			new.BlobData = buffer.Bytes()
 		}
 
 		out, err := o.RegisterNewFile(&new, form_data)
 		if err != nil {
 
-			//borrar archivo creado en disco
-			err2 := os.Remove(upload_folder + "/" + new.FileNameOnDisk)
-			if err2 != nil {
-				return nil, model.Error(err, err2)
+			if !f.SavedAsBlobInDb {
+				//borrar archivo creado en disco solo si corresponde
+				err2 := os.Remove(upload_folder + "/" + new.FileNameOnDisk)
+				if err2 != nil {
+					return nil, model.Error(err, err2)
+				}
 			}
 
 			return nil, err

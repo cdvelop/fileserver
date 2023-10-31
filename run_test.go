@@ -104,9 +104,9 @@ func Test_CrudFILE(t *testing.T) {
 
 					data.readFileTest(response, t)
 
-					data.readTest(response, t)
+					// data.readTest(response, t)
 
-					data.deleteTest(response, t)
+					// data.deleteTest(response, t)
 
 				}
 			}

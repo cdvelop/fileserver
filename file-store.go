@@ -8,7 +8,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func fileStore(file multipart.File, f *model.FileNewToStore) error {
+func fileStoreInHDD(file multipart.File, f *model.FileNewToStore) error {
 
 	err := os.MkdirAll(f.UploadFolder, os.ModePerm)
 	if err != nil {

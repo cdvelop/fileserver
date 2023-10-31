@@ -8,7 +8,7 @@ require (
 	github.com/cdvelop/fileinput v0.0.14
 	github.com/cdvelop/gotools v0.0.51
 	github.com/cdvelop/sqlite v0.0.71
-	github.com/cdvelop/testools v0.0.28
+	github.com/cdvelop/testools v0.0.30
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 

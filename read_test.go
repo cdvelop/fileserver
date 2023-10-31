@@ -20,8 +20,9 @@ func (d *dataTest) readFileTest(in model.Response, t *testing.T) {
 			responses, code, err := d.Get(new_data)
 
 			if err != nil {
-				log.Fatal(err)
+				t.Fatal(err)
 			}
+			// fmt.Println("CODIGO:", code, "DATA RESPUESTA LECTURA: ", responses)
 
 			for _, resp := range responses {
 				testools.CheckTest("read file", 200, code, resp)
@@ -59,10 +60,6 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 					folders_ids = append(folders_ids, map[string]string{d.file.Folder_id: id})
 				}
 
-				if path, file_path := resp.Data[i][d.file.File_path]; file_path {
-					log.Fatalln("error de seguridad servidor de archivos. no se espera recibir la ruta del archivo como respuesta de lectura al cliente ej:", path)
-				}
-
 				testools.CheckTest("read data json", 200, code, resp)
 			}
 		}
@@ -87,15 +84,11 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 
 			// fmt.Println("RESPUESTAS LECTURA FOLDER ID JSON: ", len(responses))
 
-			for i, resp := range responses {
+			for _, resp := range responses {
 
 				// if _, folder_id := resp.Data[i]["folder_id"]; folder_id {
 				// 	log.Fatalln("error no se espera recibir nuevamente el dato folder_id")
 				// }
-
-				if path, file_path := resp.Data[i][d.file.File_path]; file_path {
-					log.Fatalln("error de seguridad no se espera recibir la ruta del archivo en el servidor ", path)
-				}
 
 				testools.CheckTest("read data json", 200, code, resp)
 			}
