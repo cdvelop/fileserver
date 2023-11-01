@@ -54,10 +54,10 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 
 			for i, resp := range responses {
 
-				if id, folder_id := resp.Data[i][d.file.Folder_id]; !folder_id {
+				if id, folder_id := resp.Data[i][d.file.Object_id]; !folder_id {
 					log.Fatalln("se esperaba recuperar folder id")
 				} else {
-					folders_ids = append(folders_ids, map[string]string{d.file.Folder_id: id})
+					folders_ids = append(folders_ids, map[string]string{d.file.Object_id: id})
 				}
 
 				testools.CheckTest("read data json", 200, code, resp)

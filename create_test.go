@@ -16,7 +16,7 @@ func (d *dataTest) create(prueba string, t *testing.T) (responses []model.Respon
 		form := map[string]string{
 			d.file.Module_name: d.ModuleName,
 			d.file.Field_name:  d.field_name,
-			d.file.Folder_id:   testools.RandomNumber(),
+			d.file.Object_id:   testools.RandomNumber(),
 		}
 
 		body, content_type, err := fileserver.MultiPartFileForm(path_files, d.file.Files, d.files, form)

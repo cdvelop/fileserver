@@ -3,31 +3,31 @@ module github.com/cdvelop/fileserver
 go 1.20
 
 require (
-	github.com/cdvelop/api v0.0.44
+	github.com/cdvelop/api v0.0.46
 	github.com/cdvelop/cutkey v0.6.0
-	github.com/cdvelop/fileinput v0.0.15
-	github.com/cdvelop/gotools v0.0.51
-	github.com/cdvelop/sqlite v0.0.71
-	github.com/cdvelop/testools v0.0.30
+	github.com/cdvelop/fileinput v0.0.16
+	github.com/cdvelop/gotools v0.0.52
+	github.com/cdvelop/sqlite v0.0.72
+	github.com/cdvelop/testools v0.0.31
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 
 require (
-	github.com/cdvelop/dbtools v0.0.53 // indirect
-	github.com/cdvelop/input v0.0.46 // indirect
+	github.com/cdvelop/dbtools v0.0.54 // indirect
+	github.com/cdvelop/input v0.0.47 // indirect
 	github.com/cdvelop/object v0.0.20 // indirect
-	github.com/cdvelop/objectdb v0.0.76 // indirect
-	github.com/cdvelop/output v0.0.11 // indirect
+	github.com/cdvelop/objectdb v0.0.77 // indirect
+	github.com/cdvelop/output v0.0.12 // indirect
 	github.com/cdvelop/strings v0.0.4 // indirect
-	github.com/cdvelop/timeserver v0.0.11 // indirect
-	github.com/cdvelop/timetools v0.0.12 // indirect
-	github.com/cdvelop/unixid v0.0.12 // indirect
+	github.com/cdvelop/timeserver v0.0.12 // indirect
+	github.com/cdvelop/timetools v0.0.13 // indirect
+	github.com/cdvelop/unixid v0.0.13 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )
 
 require (
-	github.com/cdvelop/model v0.0.62
+	github.com/cdvelop/model v0.0.63
 	golang.org/x/net v0.17.0 // indirect
 )
 

@@ -59,18 +59,27 @@ func Test_CrudFILE(t *testing.T) {
 			}
 
 			newConfig := model.FileConfig{
-				MaximumFilesAllowed: data.max_files,
-				InputNameWithFiles:  "",
-				MaximumFileSize:     0,
-				MaximumKbSize:       data.max_size,
-				AllowedExtensions:   "",
-				RootFolder:          root_test_folder,
-				FileType:            "",
-				IdFieldName:         "",
-				Name:                data.field_name,
-				Legend:              "",
+				MaximumFilesAllowed:   data.max_files,
+				InputNameWithFiles:    "",
+				MaximumFileSize:       0,
+				MaximumKbSize:         data.max_size,
+				AllowedExtensions:     "",
+				RootFolder:            root_test_folder,
+				FileType:              "",
+				FieldNameWithObjectID: "",
+				Name:                  data.field_name,
+				Legend:                "",
 			}
-			h := model.Handlers{}
+			h := model.Handlers{
+				ThemeAdapter:    nil,
+				DataBaseAdapter: db,
+				TimeAdapter:     nil,
+				DomAdapter:      nil,
+				HttpAdapter:     nil,
+				AuthAdapter:     nil,
+				Logger:          nil,
+				DiskAdapter:     nil,
+			}
 
 			data.file, err = fileinput.New(new_object, db, newConfig, &h)
 			if err != nil {
@@ -104,9 +113,9 @@ func Test_CrudFILE(t *testing.T) {
 
 					data.readFileTest(response, t)
 
-					// data.readTest(response, t)
+					data.readTest(response, t)
 
-					// data.deleteTest(response, t)
+					data.deleteTest(response, t)
 
 				}
 			}
