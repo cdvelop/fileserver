@@ -27,7 +27,7 @@ require (
 )
 
 require (
-	github.com/cdvelop/model v0.0.63
+	github.com/cdvelop/model v0.0.64
 	golang.org/x/net v0.17.0 // indirect
 )
 

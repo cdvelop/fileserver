@@ -8,6 +8,7 @@ import (
 	"github.com/cdvelop/api"
 	"github.com/cdvelop/cutkey"
 	"github.com/cdvelop/fileinput"
+	"github.com/cdvelop/fileserver"
 	"github.com/cdvelop/gotools"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/sqlite"
@@ -78,13 +79,14 @@ func Test_CrudFILE(t *testing.T) {
 				HttpAdapter:     nil,
 				AuthAdapter:     nil,
 				Logger:          nil,
-				DiskAdapter:     nil,
+				FileAdapter:     fileserver.FileServer{},
 			}
 
 			data.file, err = fileinput.New(new_object, db, newConfig, &h)
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			data.pk_name = data.file.Object.PrimaryKeyName()
 
 			data.Object = data.file.Object
