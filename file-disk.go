@@ -16,9 +16,11 @@ func (FileServer) ReadFile(path string) ([]byte, error) {
 
 func (FileServer) DeleteFile(path string) error {
 
+	// fmt.Println("BORRANDO ARCHIVO EN EL SERVIDOR")
 	// Borrar archivos desde hdd
 	err := os.Remove(path)
 	if err != nil {
+		// fmt.Println("ERROR AL BORRAR ARCHIVO EN EL SERVIDOR", err)
 		return err
 	}
 

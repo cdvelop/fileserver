@@ -47,7 +47,7 @@ func (d *dataTest) readTest(in model.Response, t *testing.T) {
 			responses, code, err := d.Get(new_data)
 
 			if err != nil {
-				log.Fatal(err)
+				t.Fatal(err)
 			}
 
 			// fmt.Println("RESPUESTA LECTURA JSON: ", responses)

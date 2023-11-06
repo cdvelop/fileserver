@@ -21,10 +21,19 @@ func (d *dataTest) updateTest(r model.Response, t *testing.T) {
 
 		d.Data = r.Data
 
-		responses, _, err := d.CutPost()
+		_, _, err := d.CutPost()
 		if err != nil {
 			t.Fatal(err)
 		}
+
+		d.Endpoint = "/read/" + d.file.Object.Name
+
+		responses, _, err := d.Get(r.Data...)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		// fmt.Println("RESPUESTA:", responses)
 
 		for i, resp := range responses {
 			testools.CheckTest("update", "update", resp.Action, resp)
