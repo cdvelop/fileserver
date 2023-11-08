@@ -6,7 +6,7 @@ require (
 	github.com/cdvelop/api v0.0.46
 	github.com/cdvelop/cutkey v0.6.0
 	github.com/cdvelop/fileinput v0.0.20
-	github.com/cdvelop/gotools v0.0.52
+	github.com/cdvelop/gotools v0.0.53
 	github.com/cdvelop/sqlite v0.0.72
 	github.com/cdvelop/testools v0.0.31
 	github.com/gabriel-vasile/mimetype v1.4.3
@@ -14,20 +14,20 @@ require (
 
 require (
 	github.com/cdvelop/dbtools v0.0.54 // indirect
-	github.com/cdvelop/input v0.0.47 // indirect
+	github.com/cdvelop/input v0.0.48 // indirect
 	github.com/cdvelop/object v0.0.20 // indirect
 	github.com/cdvelop/objectdb v0.0.77 // indirect
 	github.com/cdvelop/output v0.0.12 // indirect
 	github.com/cdvelop/strings v0.0.4 // indirect
 	github.com/cdvelop/timeserver v0.0.12 // indirect
-	github.com/cdvelop/timetools v0.0.13 // indirect
+	github.com/cdvelop/timetools v0.0.14 // indirect
 	github.com/cdvelop/unixid v0.0.13 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 )
 
 require (
-	github.com/cdvelop/model v0.0.65
+	github.com/cdvelop/model v0.0.66
 	golang.org/x/net v0.17.0 // indirect
 )
 

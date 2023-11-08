@@ -4,13 +4,13 @@ github.com/cdvelop/sqlite v0.0.72 h1:56wmaTO/fLBV/2CF0wySdF4RsytsmwJXu81wYLW8Q/4
 github.com/cdvelop/sqlite v0.0.72/go.mod h1:VGeB5ZnYiHopx6FdOKsBKTDyc7Yfvz05ITHwc5NISXw=
 github.com/cdvelop/timeserver v0.0.12 h1:hm8jrgM1MZl1wqg6clqwFijjaGF+DA7xKmeUVJp85Sc=
 github.com/cdvelop/timeserver v0.0.12/go.mod h1:Is64c1D/COLAc+zBu+wd1/dW9QkGhKUGucsjVABUgzw=
-github.com/cdvelop/timetools v0.0.13 h1:z0/qPhPdo1sXR5QPtxAizv0dx5uyzXiygoVxiGRw9Us=
-github.com/cdvelop/timetools v0.0.13/go.mod h1:zYeMlpLppN1+q7vfv7oEvuum1EwXPu0yMYx8okXkfkI=
+github.com/cdvelop/timetools v0.0.14 h1:GvIIcFOh5rsahcivDvEPvq3CSodk+LOLGoH9iasbO9E=
+github.com/cdvelop/timetools v0.0.14/go.mod h1:14lsaVSAdJx5vT8M2jyoFlYqLZ87stW65OVYFM0kFBA=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/mattn/go-sqlite3 v1.14.17 h1:mCRHCLDUBXgpKAqIKsaAaAsrAlbkeomtRFKXh2L6YIM=
 github.com/mattn/go-sqlite3 v1.14.17/go.mod h1:2eHXhiwb8IkHr+BDWZGa96P6+rkvnG63S2DGjv9HUNg=
 golang.org/x/net v0.17.0 h1:pVaXccu2ozPjCXewfr1S7xza/zcXTity9cCdXQYSjIM=
 golang.org/x/net v0.17.0/go.mod h1:NxSsAGuq816PNPmqtQdLE42eU2Fs7NoRIZrHJAlaCOE=
-golang.org/x/text v0.13.0 h1:ablQoSUd0tRdKxZewP80B+BaqeKJuVhuRxj/dkrun3k=
-golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
+golang.org/x/text v0.14.0 h1:ScX5w1eTa3QqT8oi6+ziP7dTV1S2+ALU0bI+0zXKWiQ=
+golang.org/x/text v0.14.0/go.mod h1:18ZOQIKpY8NJVqYksKHtTdi31H5itFRjB5/qKTNYzSU=
