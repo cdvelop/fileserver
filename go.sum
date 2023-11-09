@@ -4,8 +4,8 @@ github.com/cdvelop/sqlite v0.0.72 h1:56wmaTO/fLBV/2CF0wySdF4RsytsmwJXu81wYLW8Q/4
 github.com/cdvelop/sqlite v0.0.72/go.mod h1:VGeB5ZnYiHopx6FdOKsBKTDyc7Yfvz05ITHwc5NISXw=
 github.com/cdvelop/timeserver v0.0.12 h1:hm8jrgM1MZl1wqg6clqwFijjaGF+DA7xKmeUVJp85Sc=
 github.com/cdvelop/timeserver v0.0.12/go.mod h1:Is64c1D/COLAc+zBu+wd1/dW9QkGhKUGucsjVABUgzw=
-github.com/cdvelop/timetools v0.0.14 h1:GvIIcFOh5rsahcivDvEPvq3CSodk+LOLGoH9iasbO9E=
-github.com/cdvelop/timetools v0.0.14/go.mod h1:14lsaVSAdJx5vT8M2jyoFlYqLZ87stW65OVYFM0kFBA=
+github.com/cdvelop/timetools v0.0.16 h1:YTMm2I2EAzsoEY2e0NwJbx2x/rBjMXISx1IYXGelKQg=
+github.com/cdvelop/timetools v0.0.16/go.mod h1:rEDnjpEKbR50aOTm1YQK2ZzB4nlhwTiLpWJu1+Ey7Eo=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/mattn/go-sqlite3 v1.14.17 h1:mCRHCLDUBXgpKAqIKsaAaAsrAlbkeomtRFKXh2L6YIM=

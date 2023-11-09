@@ -14,20 +14,20 @@ require (
 
 require (
 	github.com/cdvelop/dbtools v0.0.54 // indirect
-	github.com/cdvelop/input v0.0.48 // indirect
-	github.com/cdvelop/object v0.0.20 // indirect
+	github.com/cdvelop/input v0.0.50 // indirect
+	github.com/cdvelop/object v0.0.23 // indirect
 	github.com/cdvelop/objectdb v0.0.77 // indirect
 	github.com/cdvelop/output v0.0.12 // indirect
 	github.com/cdvelop/strings v0.0.4 // indirect
 	github.com/cdvelop/timeserver v0.0.12 // indirect
-	github.com/cdvelop/timetools v0.0.14 // indirect
-	github.com/cdvelop/unixid v0.0.13 // indirect
+	github.com/cdvelop/timetools v0.0.16 // indirect
+	github.com/cdvelop/unixid v0.0.16 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
 
 require (
-	github.com/cdvelop/model v0.0.66
+	github.com/cdvelop/model v0.0.67
 	golang.org/x/net v0.17.0 // indirect
 )
 

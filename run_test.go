@@ -46,7 +46,7 @@ func Test_CrudFILE(t *testing.T) {
 			new_object := &model.Object{
 				Name:                "name_test",
 				Table:               "table_test",
-				NamePrincipalFields: []string{},
+				PrincipalFieldsName: []string{},
 				Fields:              []model.Field{},
 				Module: &model.Module{
 					ModuleName: "medical_history",
