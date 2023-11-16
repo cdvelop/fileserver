@@ -108,9 +108,9 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		out, err := f.FileRegisterInDB(&new)
 		if err != nil {
 			//borrar archivo creado en disco solo si corresponde
-			err2 := os.Remove(upload_folder + "/" + new.Id_file)
+			err2 := os.Remove(upload_folder + "/" + new.Id_file + new.Extension)
 			if err2 != nil {
-				return nil, model.Error(err, err2)
+				return nil, model.Error("FileRegisterInDB", err, err2)
 			}
 			return nil, err
 		}

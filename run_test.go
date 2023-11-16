@@ -64,8 +64,6 @@ func Test_CrudFILE(t *testing.T) {
 		}
 	)
 
-	// "tamaño gatito 220kb y permitido 200 se espera error": {DescriptiveName: "foto_mascota", files: []string{"gatito.jpeg"}, FileType: "imagen", MaximumFilesAllowed: 1, MaximumKbSize: 200, expected: "error", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-
 	// DeleteUploadTestFiles
 	err := gotools.DeleteIfFolderSizeExceeds(root_test_folder, 0)
 	if err != nil {

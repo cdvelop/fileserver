@@ -1,6 +1,7 @@
 package fileserver
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -12,6 +13,14 @@ func (fileServer) FileGet(path string) (any, error) {
 	}
 
 	return archive, nil
+}
+
+func GetFile(path string) []byte {
+	archive, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return archive
 }
 
 func (fileServer) FileDelete(path string) error {
