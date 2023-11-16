@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-func (FileServer) ReadFile(path string) ([]byte, error) {
+func (fileServer) FileGet(path string) (any, error) {
 
 	archive, err := os.ReadFile(path)
 	if err != nil {
@@ -14,7 +14,7 @@ func (FileServer) ReadFile(path string) ([]byte, error) {
 	return archive, nil
 }
 
-func (FileServer) DeleteFile(path string) error {
+func (fileServer) FileDelete(path string) error {
 
 	// fmt.Println("BORRANDO ARCHIVO EN EL SERVIDOR")
 	// Borrar archivos desde hdd

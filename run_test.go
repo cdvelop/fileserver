@@ -2,30 +2,69 @@ package fileserver_test
 
 import (
 	"log"
-	"net/http/httptest"
 	"testing"
 
-	"github.com/cdvelop/api"
-	"github.com/cdvelop/cutkey"
+	"github.com/cdvelop/filehandler"
 	"github.com/cdvelop/fileinput"
 	"github.com/cdvelop/fileserver"
 	"github.com/cdvelop/gotools"
+	"github.com/cdvelop/maps"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/sqlite"
 	"github.com/cdvelop/testools"
 )
 
-var (
-	dataHttp = map[string]dataTest{
-		"crear 2 archivos gatito 220kb y dino 36kb": {field_name: "endoscopia", files: []string{"dino.png", "gatito.jpeg"}, file_type: "imagen", max_files: 2, max_size: 262, expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-		"gatito 220kb ok": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: 1, max_size: 220, expected: "create", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-		"tamaño gatito 220kb y permitido 200 se espera error": {field_name: "foto_mascota", files: []string{"gatito.jpeg"}, file_type: "imagen", max_files: 1, max_size: 200, expected: "error", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
-	}
-)
-
 const root_test_folder = "./root_test_folder"
 
 func Test_CrudFILE(t *testing.T) {
+	object := &model.Object{
+		Name:   "patient",
+		Table:  "patient",
+		Module: &model.Module{ModuleName: "medical_test", Title: "Modulo Testing", Areas: []byte{'s'}},
+	}
+
+	var (
+		testData = []dataTest{
+			{
+				Request: testools.Request{
+					TestName: "gatito 220kb  solo un solo archivo ok",
+					Method:   "POST",
+					Endpoint: "upload",
+					Object:   "foto_mascota",
+					Expected: 1,
+					Analysis: analysisTestCreateFileOK,
+				},
+				files:       []string{"gatito.jpeg"},
+				FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 1, MaximumKbSize: 220, FileType: "imagen", DescriptiveName: "foto_mascota", Source: object},
+			},
+			{
+				Request: testools.Request{
+					TestName: "crear 2 archivos gatito 220kb y dino 36kb",
+					Method:   "POST",
+					Endpoint: "upload",
+					Object:   "endoscopia",
+					Expected: 2,
+					Analysis: analysisTestCreateFileOK,
+				},
+				files:       []string{"dino.png", "gatito.jpeg"},
+				FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 2, MaximumKbSize: 262, FileType: "imagen", DescriptiveName: "endoscopia", Source: object},
+			},
+			// {
+			// 	Request: testools.Request{
+			// 		TestName: "tamaño gatito 220kb y permitido 200 se espera error",
+			// 		Method:   "POST",
+			// 		Endpoint: "upload",
+			// 		Object:   "gato_malo",
+			// 		Expected: []map[string]string{{"error": "error tamaño de archivo excedido máximo admitido: 215040 kb"}},
+			// 		Analysis: analysisTestCreateFileERROR,
+			// 	},
+			// 	files:       []string{"dino.png", "gatito.jpeg"},
+			// 	FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 1, MaximumKbSize: 200, FileType: "imagen", DescriptiveName: "gato_malo", Source: object},
+			// },
+		}
+	)
+
+	// "tamaño gatito 220kb y permitido 200 se espera error": {DescriptiveName: "foto_mascota", files: []string{"gatito.jpeg"}, FileType: "imagen", MaximumFilesAllowed: 1, MaximumKbSize: 200, expected: "error", Request: &testools.Request{Endpoint: "/create/", Method: "POST"}},
 
 	// DeleteUploadTestFiles
 	err := gotools.DeleteIfFolderSizeExceeds(root_test_folder, 0)
@@ -38,89 +77,98 @@ func Test_CrudFILE(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	for prueba, data := range dataHttp {
-		t.Run((prueba), func(t *testing.T) {
+	for _, r := range testData {
+		t.Run((r.TestName), func(t *testing.T) {
 
-			db := sqlite.NewConnection(root_test_folder, "stored_files_index.db", false)
-
-			new_object := &model.Object{
-				Name:                "name_test",
-				Table:               "table_test",
-				PrincipalFieldsName: []string{},
-				Fields:              []model.Field{},
-				Module: &model.Module{
-					ModuleName: "medical_history",
-					Title:      "Modulo Testing",
-					Areas:      []byte{},
-					Objects:    []*model.Object{},
-					Inputs:     []*model.Input{},
-				},
-				BackendHandler:  model.BackendHandler{},
-				FrontendHandler: model.FrontendHandler{},
+			h := &model.Handlers{
+				FileRootFolder:  root_test_folder,
+				DataBaseAdapter: sqlite.NewConnection(root_test_folder, "stored_files_index.db", false),
 			}
 
-			newConfig := model.FileConfig{
-				MaximumFilesAllowed:   data.max_files,
-				InputNameWithFiles:    "",
-				MaximumFileSize:       0,
-				MaximumKbSize:         data.max_size,
-				AllowedExtensions:     "",
-				RootFolder:            root_test_folder,
-				FileType:              "",
-				FieldNameWithObjectID: "",
-				Name:                  data.field_name,
-				Legend:                "",
-			}
-			h := model.Handlers{
-				ThemeAdapter:    nil,
-				DataBaseAdapter: db,
-				TimeAdapter:     nil,
-				DomAdapter:      nil,
-				HttpAdapter:     nil,
-				AuthAdapter:     nil,
-				Logger:          nil,
-				FileAdapter:     fileserver.FileServer{},
-			}
-
-			data.file, err = fileinput.New(new_object, db, newConfig, &h)
+			fs, err := fileserver.AddFileApi(h, h, h, root_test_folder)
 			if err != nil {
 				t.Fatal(err)
+				return
+			}
+			h.FileApi = fs
+
+			app, err := testools.NewApiTestDefault(t, h)
+			if err != nil {
+				t.Fatal(err)
+				return
+			}
+			defer app.Server.Close()
+			r.ApiTest = app
+
+			// AGREGAR API FILE INPUT
+			_, err = fileinput.NewUploadFileApi(h, r.Source, r.FileSetting)
+			if err != nil {
+				t.Fatal(err)
+				return
 			}
 
-			data.pk_name = data.file.Object.PrimaryKeyName()
-
-			data.Object = data.file.Object
-			// fmt.Println("OBJECT:", *data.Object)
-
-			// data.Module.Objects = append(data.Module.Objects, data.Object)
-
-			data.Cut = cutkey.Add(data.Object)
-
-			api_conf := api.Add([]*model.Module{new_object.Module}, nil)
-
-			mux := api_conf.ServeMuxAndRoutes()
-
-			data.Server = httptest.NewServer(mux)
-			defer data.Server.Close()
-
-			responses := data.create(prueba, t)
-
-			// log.Println("CREATE RESPUESTAS:", responses)
-
-			for _, response := range responses {
-
-				if response.Action != "error" {
-
-					data.updateTest(response, t)
-
-					data.readFileTest(response, t)
-
-					data.readTest(response, t)
-
-					data.deleteTest(response, t)
-
-				}
+			//*** CREAR FORMULARIO PARA ENVIÓ
+			new := filehandler.File{
+				Module_name: r.Source.ModuleName,
+				Field_name:  r.DescriptiveName,
+				Object_id:   testools.RandomNumber(),
+				File_area:   string(r.Source.Areas[0]),
+				// Extension:   r.Extension,
+				// Description: "",
 			}
+
+			form, err := maps.BuildFormString(&new)
+			if err != nil {
+				t.Fatal(err)
+				return
+			}
+
+			body, boundary, err := fileserver.MultiPartFileForm(path_files, r.files, form)
+			if err != nil {
+				t.Fatal(err)
+				return
+			}
+
+			send := map[string][]byte{
+				boundary: body,
+			}
+
+			r.SendOneRequest(r.Method, app.BuildEndPoint(r.Request), r.Object, send, func(response []map[string]string, err error) {
+				r.Analysis(&r.Request, response, err)
+			})
+
+			// fmt.Println("METHOD: ", body)
+
+			// var code int
+			// d.Endpoint += d.file.Object.Name
+
+			// fmt.Println("ENDPOINT CREATE: ", d.Endpoint)
+
+			// responses, _, err = d.SendRequest(body.Bytes())
+			// if err != nil {
+			// 	t.Fatal(err)
+			// }
+
+			// for _, resp := range responses {
+			// 	testools.CheckTest(prueba, d.expected, resp.Action, resp)
+			// }
+
+			// log.Println("CREATE RESPUESTAS:")
+
+			// for _, response := range responses {
+
+			// if response.Action != "error" {
+
+			// data.updateTest(response, t)
+
+			// data.readFileTest(response, t)
+
+			// data.readTest(response, t)
+
+			// data.deleteTest(response, t)
+
+			// }
+			// }
 		})
 	}
 

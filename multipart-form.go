@@ -10,12 +10,12 @@ import (
 )
 
 // path_files ej: ./test_files
-// field_name ej: endoscopia, voucher, foto_mascota, foto_usuario
+// "files" ej: "files", "endoscopia", "voucher", "foto_mascota", "foto_usuario"
 // files_name ej: "gatito.jpg, perro.png"
-func MultiPartFileForm(path_files, field_name string, files_name []string, form map[string]string) (body *bytes.Buffer, content_type string, err error) {
+func MultiPartFileForm(path_files string, files_name []string, form map[string]string) (body []byte, boundary string, err error) {
 
-	body = &bytes.Buffer{}
-	writer := multipart.NewWriter(body)
+	body_buf := &bytes.Buffer{}
+	writer := multipart.NewWriter(body_buf)
 
 	for _, file_name := range files_name {
 
@@ -27,7 +27,7 @@ func MultiPartFileForm(path_files, field_name string, files_name []string, form 
 		defer File.Close()
 
 		// creamos formato de envió de archivo
-		part, err := writer.CreateFormFile(field_name, file_name)
+		part, err := writer.CreateFormFile("files", file_name)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -37,7 +37,7 @@ func MultiPartFileForm(path_files, field_name string, files_name []string, form 
 		}
 
 		// escribimos en memoria el campo del formulario
-		err = writer.WriteField(field_name, file_name)
+		err = writer.WriteField("files", file_name)
 		if err != nil {
 			return nil, "", err
 		}
@@ -57,7 +57,7 @@ func MultiPartFileForm(path_files, field_name string, files_name []string, form 
 		return nil, "", err
 	}
 
-	return body, writer.FormDataContentType(), nil
+	return body_buf.Bytes(), writer.FormDataContentType(), nil
 }
 
 // https://matt.aimonetti.net/posts/2013-07-golang-multipart-File-upload-example/

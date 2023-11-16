@@ -5,17 +5,17 @@ import (
 	"mime/multipart"
 	"os"
 
-	"github.com/cdvelop/model"
+	"github.com/cdvelop/filehandler"
 )
 
-func fileStoreInHDD(file multipart.File, f *model.FileNewToStore) error {
+func fileStoreInHDD(file multipart.File, upload_folder string, f *filehandler.File) error {
 
-	err := os.MkdirAll(f.UploadFolder, os.ModePerm)
+	err := os.MkdirAll(upload_folder, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	dst, err := os.Create(f.UploadFolder + "/" + f.FileNameOnDisk + f.Extension)
+	dst, err := os.Create(upload_folder + "/" + f.Id_file + f.Extension)
 	if err != nil {
 		return err
 	}
