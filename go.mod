@@ -6,7 +6,7 @@ require (
 	github.com/cdvelop/gotools v0.0.57
 	github.com/cdvelop/sqlite v0.0.77
 	github.com/cdvelop/strings v0.0.7
-	github.com/cdvelop/testools v0.0.37
+	github.com/cdvelop/testools v0.0.38
 	github.com/cdvelop/unixid v0.0.18
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
