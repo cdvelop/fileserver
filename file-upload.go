@@ -5,7 +5,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path/filepath"
 
 	"github.com/cdvelop/filehandler"
 	"github.com/cdvelop/model"
@@ -71,29 +70,31 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		}
 		defer file.Close()
 
+		id, description := f.BuildIDFileNameAndDescription(fileHeader.Filename)
+		fmt.Println("NOMBRE DE ARCHIVO:", fileHeader.Filename)
+
 		new := filehandler.File{
-			Id_file:     f.GetNewID(),
-			Module_name: x.Source.ModuleName,
+			Id_file:     id,
+			Module_name: x.ModuleName,
 			Field_name:  x.DescriptiveName,
 			Object_id:   object_id,
 			File_area:   area_file,
 			Extension:   getExtensionOnly(fileHeader),
-			Description: fileHeader.Filename,
+			Description: description,
 		}
 
 		var found_extension bool
-		for _, ext := range x.GetAllowedExtensions() {
+		for _, ext := range x.AllowedExtensions {
 			if ext == new.Extension {
 				found_extension = true
 			}
 		}
 
-		if !found_extension {
-			return nil, model.Error("extension archivo", new.Extension, "no valida como", x.DescriptiveName, "solo se admiten:", x.GetAllowedExtensions())
-		}
+		fmt.Println("EXTENSION OBTENIDA:", new.Extension)
 
-		// obtengo extension original con punto
-		new.Extension = filepath.Ext(fileHeader.Filename)
+		if !found_extension {
+			return nil, model.Error("extension archivo", new.Extension, "no valida como", x.DescriptiveName, "solo se admiten:", x.AllowedExtensions)
+		}
 
 		_, err = file.Seek(0, io.SeekStart)
 		if err != nil {

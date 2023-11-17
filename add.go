@@ -6,17 +6,20 @@ import (
 	"github.com/cdvelop/unixid"
 )
 
-func AddFileApi(l model.Logger, db model.DataBaseAdapter, hdd model.FileDiskRW, root_folder ...string) (*fileServer, error) {
+func AddFileApi(h *model.Handlers) (*fileServer, error) {
 
-	fh, err := filehandler.Add(l, db, hdd, root_folder...)
+	fs := &fileServer{
+		FileHandler: nil,
+		input_id:    unixid.InputPK(),
+	}
+	h.FileApi = fs
+	h.FileDiskRW = fs
+
+	fh, err := filehandler.Add(h.Logger, h.DataBaseAdapter, fs, h.FileRootFolder)
 	if err != nil {
 		return nil, err
 	}
-
-	fs := &fileServer{
-		FileHandler: fh,
-		input_id:    unixid.InputPK(),
-	}
+	fs.FileHandler = fh
 
 	return fs, nil
 }

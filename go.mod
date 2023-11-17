@@ -27,7 +27,7 @@ require (
 
 require (
 	github.com/cdvelop/fetchserver v0.0.2 // indirect
-	github.com/cdvelop/filehandler v0.0.3
+	github.com/cdvelop/filehandler v0.0.5
 	github.com/cdvelop/fileinput v0.0.26
 	github.com/cdvelop/logserver v0.0.3 // indirect
 	github.com/cdvelop/maps v0.0.2

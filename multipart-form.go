@@ -7,17 +7,27 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
+
+	"github.com/cdvelop/model"
 )
 
 // path_files ej: ./test_files
 // "files" ej: "files", "endoscopia", "voucher", "foto_mascota", "foto_usuario"
 // files_name ej: "gatito.jpg, perro.png"
-func MultiPartFileForm(path_files string, files_name []string, form map[string]string) (body []byte, boundary string, err error) {
+func MultiPartFileForm(path_files string, x_files any, form map[string]string) (body []byte, boundary string, err error) {
+
+	var files map[string]string
+
+	if map_files, ok := x_files.(map[string]string); ok {
+		files = map_files
+	} else {
+		return nil, "", model.Error("error MultiPartFileForm files map[string]string no ingresado")
+	}
 
 	body_buf := &bytes.Buffer{}
 	writer := multipart.NewWriter(body_buf)
 
-	for _, file_name := range files_name {
+	for file_name, nominated_name := range files {
 
 		// abrimos el archivo local para la prueba
 		File, err := os.Open(filepath.Join(path_files, file_name))
@@ -25,6 +35,10 @@ func MultiPartFileForm(path_files string, files_name []string, form map[string]s
 			return nil, "", err
 		}
 		defer File.Close()
+
+		if nominated_name != "" {
+			file_name = nominated_name
+		}
 
 		// creamos formato de envió de archivo
 		part, err := writer.CreateFormFile("files", file_name)

@@ -14,6 +14,11 @@ import (
 	"github.com/cdvelop/testools"
 )
 
+type dataTest struct {
+	testools.Request
+	filehandler.FileSetting
+}
+
 const root_test_folder = "./root_test_folder"
 
 func Test_CrudFILE(t *testing.T) {
@@ -27,40 +32,54 @@ func Test_CrudFILE(t *testing.T) {
 		testData = []dataTest{
 			{
 				Request: testools.Request{
-					TestName: "gatito 220kb  solo un solo archivo ok",
+					TestName: "2 archivos de diferente clase se envían con id cada uno se espera ok",
 					Method:   "POST",
 					Endpoint: "upload",
 					Object:   "foto_mascota",
-					Expected: 1,
-					Analysis: analysisTestCreateFileOK,
+					Data:     map[string]string{"dino.png": "1111.0_dino chico", "gatito.jpeg": "2222_gato grande"}, //con ids propuesto
+					Expected: []map[string]string{{"description": "dino chico", "id_file": "1111.0"}, {"description": "gato grande", "id_file": "2222"}},
+					Analysis: crudTestAnalysis,
 				},
-				files:       []string{"gatito.jpeg"},
-				FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 1, MaximumKbSize: 220, FileType: "imagen", DescriptiveName: "foto_mascota", Source: object},
+				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 2, MaximumKbSize: 270, DescriptiveName: "foto_mascota"},
 			},
 			{
+				Request: testools.Request{
+					TestName: "gatito 220kb solo un solo archivo nombre de fichero formato texto de debe crear id nuevo se espera ok",
+					Method:   "POST",
+					Endpoint: "upload",
+					Object:   "foto_mascota",
+					Data:     map[string]string{"gatito.jpeg": ""}, //sin id propuesto
+					Expected: 1,
+					Analysis: analysisCreateFileNameNoIdType,
+				},
+				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg"}, MaximumFilesAllowed: 1, MaximumKbSize: 220, DescriptiveName: "foto_mascota"},
+			},
+			{
+
 				Request: testools.Request{
 					TestName: "crear 2 archivos gatito 220kb y dino 36kb",
 					Method:   "POST",
 					Endpoint: "upload",
 					Object:   "endoscopia",
+					Data:     map[string]string{"dino.png": "", "gatito.jpeg": ""}, //sin id propuesto
 					Expected: 2,
-					Analysis: analysisTestCreateFileOK,
+					Analysis: analysisCreateFileNameNoIdType,
 				},
-				files:       []string{"dino.png", "gatito.jpeg"},
-				FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 2, MaximumKbSize: 262, FileType: "imagen", DescriptiveName: "endoscopia", Source: object},
+				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 2, MaximumKbSize: 262, DescriptiveName: "endoscopia"},
 			},
-			// {
-			// 	Request: testools.Request{
-			// 		TestName: "tamaño gatito 220kb y permitido 200 se espera error",
-			// 		Method:   "POST",
-			// 		Endpoint: "upload",
-			// 		Object:   "gato_malo",
-			// 		Expected: []map[string]string{{"error": "error tamaño de archivo excedido máximo admitido: 215040 kb"}},
-			// 		Analysis: analysisTestCreateFileERROR,
-			// 	},
-			// 	files:       []string{"dino.png", "gatito.jpeg"},
-			// 	FileSetting: filehandler.FileSetting{MaximumFilesAllowed: 1, MaximumKbSize: 200, FileType: "imagen", DescriptiveName: "gato_malo", Source: object},
-			// },
+			{
+
+				Request: testools.Request{
+					TestName: "tamaño gatito 220kb y permitido 200 se espera error",
+					Method:   "POST",
+					Endpoint: "upload",
+					Object:   "gato_malo",
+					Data:     map[string]string{"dino.png": "", "gatito.jpeg": ""}, //sin id propuesto
+					Expected: "error tamaño de archivo excedido máximo admitido: 215040 kb",
+					Analysis: analysisCreateFileNameNoIdType,
+				},
+				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 1, MaximumKbSize: 200, DescriptiveName: "gato_malo"},
+			},
 		}
 	)
 
@@ -83,12 +102,11 @@ func Test_CrudFILE(t *testing.T) {
 				DataBaseAdapter: sqlite.NewConnection(root_test_folder, "stored_files_index.db", false),
 			}
 
-			fs, err := fileserver.AddFileApi(h, h, h, root_test_folder)
+			_, err := fileserver.AddFileApi(h)
 			if err != nil {
 				t.Fatal(err)
 				return
 			}
-			h.FileApi = fs
 
 			app, err := testools.NewApiTestDefault(t, h)
 			if err != nil {
@@ -99,7 +117,7 @@ func Test_CrudFILE(t *testing.T) {
 			r.ApiTest = app
 
 			// AGREGAR API FILE INPUT
-			_, err = fileinput.NewUploadFileApi(h, r.Source, r.FileSetting)
+			_, err = fileinput.NewUploadFileApi(h, object, r.FileSetting)
 			if err != nil {
 				t.Fatal(err)
 				return
@@ -107,12 +125,10 @@ func Test_CrudFILE(t *testing.T) {
 
 			//*** CREAR FORMULARIO PARA ENVIÓ
 			new := filehandler.File{
-				Module_name: r.Source.ModuleName,
+				Module_name: object.ModuleName,
 				Field_name:  r.DescriptiveName,
 				Object_id:   testools.RandomNumber(),
-				File_area:   string(r.Source.Areas[0]),
-				// Extension:   r.Extension,
-				// Description: "",
+				File_area:   string(object.Areas[0]),
 			}
 
 			form, err := maps.BuildFormString(&new)
@@ -121,7 +137,7 @@ func Test_CrudFILE(t *testing.T) {
 				return
 			}
 
-			body, boundary, err := fileserver.MultiPartFileForm(path_files, r.files, form)
+			body, boundary, err := fileserver.MultiPartFileForm(path_files, r.Data, form)
 			if err != nil {
 				t.Fatal(err)
 				return
@@ -135,38 +151,6 @@ func Test_CrudFILE(t *testing.T) {
 				r.Analysis(&r.Request, response, err)
 			})
 
-			// fmt.Println("METHOD: ", body)
-
-			// var code int
-			// d.Endpoint += d.file.Object.Name
-
-			// fmt.Println("ENDPOINT CREATE: ", d.Endpoint)
-
-			// responses, _, err = d.SendRequest(body.Bytes())
-			// if err != nil {
-			// 	t.Fatal(err)
-			// }
-
-			// for _, resp := range responses {
-			// 	testools.CheckTest(prueba, d.expected, resp.Action, resp)
-			// }
-
-			// log.Println("CREATE RESPUESTAS:")
-
-			// for _, response := range responses {
-
-			// if response.Action != "error" {
-
-			// data.updateTest(response, t)
-
-			// data.readFileTest(response, t)
-
-			// data.readTest(response, t)
-
-			// data.deleteTest(response, t)
-
-			// }
-			// }
 		})
 	}
 
