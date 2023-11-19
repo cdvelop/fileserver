@@ -8,6 +8,7 @@ import (
 	"github.com/cdvelop/fileinput"
 	"github.com/cdvelop/fileserver"
 	"github.com/cdvelop/gotools"
+	"github.com/cdvelop/logserver"
 	"github.com/cdvelop/maps"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/sqlite"
@@ -100,6 +101,7 @@ func Test_CrudFILE(t *testing.T) {
 			h := &model.Handlers{
 				FileRootFolder:  root_test_folder,
 				DataBaseAdapter: sqlite.NewConnection(root_test_folder, "stored_files_index.db", false),
+				Logger:          logserver.Add(),
 			}
 
 			_, err := fileserver.AddFileApi(h)

@@ -15,7 +15,7 @@ func AddFileApi(h *model.Handlers) (*fileServer, error) {
 	h.FileApi = fs
 	h.FileDiskRW = fs
 
-	fh, err := filehandler.Add(h.Logger, h.DataBaseAdapter, fs, h.FileRootFolder)
+	fh, err := filehandler.Add(h)
 	if err != nil {
 		return nil, err
 	}
