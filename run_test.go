@@ -8,7 +8,6 @@ import (
 	"github.com/cdvelop/fileinput"
 	"github.com/cdvelop/fileserver"
 	"github.com/cdvelop/gotools"
-	"github.com/cdvelop/logserver"
 	"github.com/cdvelop/maps"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/sqlite"
@@ -24,9 +23,9 @@ const root_test_folder = "./root_test_folder"
 
 func Test_CrudFILE(t *testing.T) {
 	object := &model.Object{
-		Name:   "patient",
-		Table:  "patient",
-		Module: &model.Module{ModuleName: "medical_test", Title: "Modulo Testing", Areas: []byte{'s'}},
+		ObjectName: "patient",
+		Table:      "patient",
+		Module:     &model.Module{ModuleName: "medical_test", Title: "Modulo Testing", Areas: []byte{'s'}},
 	}
 
 	var (
@@ -101,13 +100,6 @@ func Test_CrudFILE(t *testing.T) {
 			h := &model.Handlers{
 				FileRootFolder:  root_test_folder,
 				DataBaseAdapter: sqlite.NewConnection(root_test_folder, "stored_files_index.db", false),
-				Logger:          logserver.Add(),
-			}
-
-			_, err := fileserver.AddFileApi(h)
-			if err != nil {
-				t.Fatal(err)
-				return
 			}
 
 			app, err := testools.NewApiTestDefault(t, h)

@@ -12,11 +12,11 @@ require (
 )
 
 require (
-	github.com/cdvelop/api v0.0.55 // indirect
+	github.com/cdvelop/api v0.0.58 // indirect
 	github.com/cdvelop/cutkey v0.6.0 // indirect
 	github.com/cdvelop/dbtools v0.0.59 // indirect
 	github.com/cdvelop/input v0.0.52 // indirect
-	github.com/cdvelop/object v0.0.27 // indirect
+	github.com/cdvelop/object v0.0.28 // indirect
 	github.com/cdvelop/objectdb v0.0.82 // indirect
 	github.com/cdvelop/output v0.0.16 // indirect
 	github.com/cdvelop/timeserver v0.0.17 // indirect
@@ -30,8 +30,8 @@ require (
 	github.com/cdvelop/filehandler v0.0.5
 	github.com/cdvelop/fileinput v0.0.26
 	github.com/cdvelop/logserver v0.0.3 // indirect
-	github.com/cdvelop/maps v0.0.2
-	github.com/cdvelop/model v0.0.68
+	github.com/cdvelop/maps v0.0.3
+	github.com/cdvelop/model v0.0.69
 	golang.org/x/net v0.18.0 // indirect
 )
 
