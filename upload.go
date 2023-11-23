@@ -5,12 +5,13 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/cdvelop/filehandler"
-	"github.com/cdvelop/model"
+	"github.com/cdvelop/strings"
 )
 
-func (f *fileServer) FileUpload(object_name, area_file string, request ...any) ([]map[string]string, error) {
+func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (data_out []map[string]string, err string) {
 	var r *http.Request
 	var w http.ResponseWriter
 	for _, v := range request {
@@ -23,55 +24,58 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 	}
 
 	if r == nil || w == nil {
-		return nil, model.Error("r *http.Request o w http.ResponseWriter no enviado en FileUpload")
+		return nil, "r *http.Request o w http.ResponseWriter no enviado en FileUpload"
 	}
 
 	x, err := f.GetFileSettings(object_name)
-	if err != nil {
+	if err != "" {
 		return nil, err
 	}
 
 	fmt.Println("CONFIGURACIONES:", x)
 
 	form_data, err := multipartFormDataFile(x, r, w)
-	if err != nil {
+	if err != "" {
 		return nil, err
 	}
 
 	fmt.Println("FORMULARIO ENVIADO:", form_data)
 
 	files := r.MultipartForm.File["files"]
-	if len(files) == 0 {
-		return nil, model.Error("error no hay archivos detectados en el formulario")
+
+	total_files := len(files)
+
+	if total_files == 0 {
+		return nil, "error no hay archivos detectados en el formulario"
 	}
 
-	if len(files) > int(x.MaximumFilesAllowed) {
-		return nil, model.Error("error se pretende subir", len(files), "archivos, pero el máximo permitido es:", x.MaximumFilesAllowed)
+	if total_files > int(x.MaximumFilesAllowed) {
+		return nil, "se pretende subir " + strconv.Itoa(total_files) + " archivos, pero el máximo permitido es: " + strconv.FormatInt(x.MaximumFilesAllowed, 10)
 	}
 
-	data_out := []map[string]string{}
+	data_out = []map[string]string{}
 
 	// verificar si el id del objeto fue enviado
 	object_id, exist := form_data["object_id"]
 	if !exist {
-		return nil, model.Error("valor campo object_id:", x.FieldNameWithObjectID, "no enviado en formulario archivo")
+		return nil, "valor campo object_id: " + x.FieldNameWithObjectID + " no enviado en formulario archivo"
 	}
 
 	upload_folder := f.UploadFolderPath(form_data)
 
 	for _, fileHeader := range files {
 		if fileHeader.Size > x.GetMaximumFileSize() {
-			return nil, model.Error("error archivo(s) excede(n) el tamaño admitido de:", x.MaximumKbSize, "kb")
+			return nil, "error archivo(s) excede(n) el tamaño admitido de: " + strconv.FormatInt(x.MaximumKbSize, 10) + "kb"
 		}
 
-		file, err := fileHeader.Open()
-		if err != nil {
-			return nil, err
+		file, e := fileHeader.Open()
+		if e != nil {
+			return nil, "fileHeader " + e.Error()
 		}
 		defer file.Close()
 
 		id, description := f.BuildIDFileNameAndDescription(fileHeader.Filename)
-		fmt.Println("NOMBRE DE ARCHIVO:", fileHeader.Filename)
+		// fmt.Println("NOMBRE DE ARCHIVO:", fileHeader.Filename)
 
 		new := filehandler.File{
 			Id_file:     id,
@@ -90,28 +94,28 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 			}
 		}
 
-		fmt.Println("EXTENSION OBTENIDA:", new.Extension)
+		// fmt.Println("EXTENSION OBTENIDA:", new.Extension)
 
 		if !found_extension {
-			return nil, model.Error("extension archivo", new.Extension, "no valida como", x.DescriptiveName, "solo se admiten:", x.AllowedExtensions)
+			return nil, "extension archivo " + new.Extension + " no valida como " + x.DescriptiveName + " solo se admiten: " + strings.Join(x.AllowedExtensions, ",")
 		}
 
-		_, err = file.Seek(0, io.SeekStart)
-		if err != nil {
-			return nil, err
+		_, e = file.Seek(0, io.SeekStart)
+		if e != nil {
+			return nil, "file.Seek " + e.Error()
 		}
 
 		err = fileStoreInHDD(file, upload_folder, &new)
-		if err != nil {
+		if err != "" {
 			return nil, err
 		}
 
 		out, err := f.FileRegisterInDB(&new)
-		if err != nil {
+		if err != "" {
 			//borrar archivo creado en disco solo si corresponde
 			err2 := os.Remove(upload_folder + "/" + new.Id_file + new.Extension)
 			if err2 != nil {
-				return nil, model.Error("FileRegisterInDB", err, err2)
+				return nil, "FileRegisterInDB " + err + " " + err2.Error()
 			}
 			return nil, err
 		}
@@ -119,5 +123,5 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		data_out = append(data_out, out)
 	}
 
-	return data_out, nil
+	return data_out, ""
 }

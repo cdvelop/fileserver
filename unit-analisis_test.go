@@ -4,11 +4,11 @@ import (
 	"github.com/cdvelop/testools"
 )
 
-func analysisCreateFileNameNoIdType(r *testools.Request, results []map[string]string, err error) {
+func analysisCreateFileNameNoIdType(r *testools.Request, results []map[string]string, err string) {
 	// fmt.Println("result:", results)
 
-	if err != nil {
-		if !r.CheckTest(r.Expected, err.Error(), "no se esperaba error") {
+	if err != "" {
+		if !r.CheckTest(r.Expected, err, "no se esperaba error") {
 			r.T.Fatal()
 			return
 		}

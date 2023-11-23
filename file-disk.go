@@ -5,14 +5,14 @@ import (
 	"os"
 )
 
-func (fileServer) FileGet(path string) (any, error) {
+func (fileServer) FileGet(path string) (a any, err string) {
 
-	archive, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
+	archive, e := os.ReadFile(path)
+	if e != nil {
+		return nil, "FileGet error" + e.Error()
 	}
 
-	return archive, nil
+	return archive, ""
 }
 
 func GetFile(path string) []byte {
@@ -23,15 +23,15 @@ func GetFile(path string) []byte {
 	return archive
 }
 
-func (fileServer) FileDelete(path string) error {
+func (fileServer) FileDelete(path string) (err string) {
 
 	// fmt.Println("BORRANDO ARCHIVO EN EL SERVIDOR")
 	// Borrar archivos desde hdd
-	err := os.Remove(path)
-	if err != nil {
+	e := os.Remove(path)
+	if e != nil {
 		// fmt.Println("ERROR AL BORRAR ARCHIVO EN EL SERVIDOR", err)
-		return err
+		return "FileDelete error " + e.Error()
 	}
 
-	return nil
+	return ""
 }

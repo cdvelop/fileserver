@@ -25,7 +25,7 @@ func (f fileServer) BuildIDFileNameAndDescription(header_name string) (id, descr
 
 	// 2- validamos si el id obtenido esta ok
 	err := f.input_id.Validate.ValidateField(id, false)
-	if err != nil {
+	if err != "" {
 		// si no es valido generamos un id nuevo
 		id = f.GetNewID()
 	}

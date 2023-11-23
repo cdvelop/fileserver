@@ -11,10 +11,10 @@ func readFileTest(r *testools.Request, all_data ...map[string]string) bool {
 
 		endpoint := r.Server.URL + "/file?id=" + data["id_file"]
 
-		r.SendOneRequest("GET", endpoint, "", nil, func(resp_read []map[string]string, err error) {
+		r.SendOneRequest("GET", endpoint, "", nil, func(resp_read []map[string]string, err string) {
 
-			if err != nil {
-				if !r.CheckTest("", err.Error(), "no se esperaba error") {
+			if err != "" {
+				if !r.CheckTest("", err, "no se esperaba error") {
 					r.T.Fatal()
 					return
 				}
@@ -46,10 +46,10 @@ func readFileJsonDataTest(r *testools.Request, all_data ...map[string]string) {
 
 		// enviar solo id
 
-		r.SendOneRequest("POST", endpoint, r.Object, map[string]string{"id_file": id}, func(resp_read []map[string]string, err error) {
+		r.SendOneRequest("POST", endpoint, r.Object, map[string]string{"id_file": id}, func(resp_read []map[string]string, err string) {
 
-			if err != nil {
-				if !r.CheckTest("", err.Error(), "no se esperaba error", test_name) {
+			if err != "" {
+				if !r.CheckTest("", err, "no se esperaba error", test_name) {
 					r.T.Fatal()
 					return
 				}

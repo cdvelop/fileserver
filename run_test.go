@@ -1,13 +1,14 @@
 package fileserver_test
 
 import (
-	"log"
+	"fmt"
+	"os"
 	"testing"
+	"time"
 
 	"github.com/cdvelop/filehandler"
 	"github.com/cdvelop/fileinput"
 	"github.com/cdvelop/fileserver"
-	"github.com/cdvelop/gotools"
 	"github.com/cdvelop/maps"
 	"github.com/cdvelop/model"
 	"github.com/cdvelop/sqlite"
@@ -22,32 +23,23 @@ type dataTest struct {
 const root_test_folder = "./root_test_folder"
 
 func Test_CrudFILE(t *testing.T) {
+	const module_name = "medical_test"
+	var file_api = module_name + ".file."
+
 	object := &model.Object{
 		ObjectName: "patient",
 		Table:      "patient",
-		Module:     &model.Module{ModuleName: "medical_test", Title: "Modulo Testing", Areas: []byte{'s'}},
+		Module:     &model.Module{ModuleName: module_name, Title: "Modulo Testing", Areas: []byte{'s'}},
 	}
 
 	var (
 		testData = []dataTest{
 			{
 				Request: testools.Request{
-					TestName: "2 archivos de diferente clase se envían con id cada uno se espera ok",
-					Method:   "POST",
-					Endpoint: "upload",
-					Object:   "foto_mascota",
-					Data:     map[string]string{"dino.png": "1111.0_dino chico", "gatito.jpeg": "2222_gato grande"}, //con ids propuesto
-					Expected: []map[string]string{{"description": "dino chico", "id_file": "1111.0"}, {"description": "gato grande", "id_file": "2222"}},
-					Analysis: crudTestAnalysis,
-				},
-				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 2, MaximumKbSize: 270, DescriptiveName: "foto_mascota"},
-			},
-			{
-				Request: testools.Request{
 					TestName: "gatito 220kb solo un solo archivo nombre de fichero formato texto de debe crear id nuevo se espera ok",
 					Method:   "POST",
 					Endpoint: "upload",
-					Object:   "foto_mascota",
+					Object:   file_api + "foto_mascota",
 					Data:     map[string]string{"gatito.jpeg": ""}, //sin id propuesto
 					Expected: 1,
 					Analysis: analysisCreateFileNameNoIdType,
@@ -55,12 +47,24 @@ func Test_CrudFILE(t *testing.T) {
 				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg"}, MaximumFilesAllowed: 1, MaximumKbSize: 220, DescriptiveName: "foto_mascota"},
 			},
 			{
+				Request: testools.Request{
+					TestName: "2 archivos de diferente clase se envían con id cada uno se espera ok",
+					Method:   "POST",
+					Endpoint: "upload",
+					Object:   file_api + "foto_mascota",
+					Data:     map[string]string{"dino.png": "1111.0_dino chico", "gatito.jpeg": "2222_gato grande"}, //con ids propuesto
+					Expected: []map[string]string{{"description": "dino chico", "id_file": "1111.0"}, {"description": "gato grande", "id_file": "2222"}},
+					Analysis: crudTestAnalysis,
+				},
+				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 2, MaximumKbSize: 270, DescriptiveName: "foto_mascota"},
+			},
+			{
 
 				Request: testools.Request{
 					TestName: "crear 2 archivos gatito 220kb y dino 36kb",
 					Method:   "POST",
 					Endpoint: "upload",
-					Object:   "endoscopia",
+					Object:   file_api + "endoscopia",
 					Data:     map[string]string{"dino.png": "", "gatito.jpeg": ""}, //sin id propuesto
 					Expected: 2,
 					Analysis: analysisCreateFileNameNoIdType,
@@ -73,9 +77,9 @@ func Test_CrudFILE(t *testing.T) {
 					TestName: "tamaño gatito 220kb y permitido 200 se espera error",
 					Method:   "POST",
 					Endpoint: "upload",
-					Object:   "gato_malo",
+					Object:   file_api + "gato_malo",
 					Data:     map[string]string{"dino.png": "", "gatito.jpeg": ""}, //sin id propuesto
-					Expected: "error tamaño de archivo excedido máximo admitido: 215040 kb",
+					Expected: "api upload error tamaño de archivo excedido máximo admitido: 215040 kb",
 					Analysis: analysisCreateFileNameNoIdType,
 				},
 				FileSetting: filehandler.FileSetting{AllowedExtensions: []string{".jpeg", ".jpg", ".png"}, MaximumFilesAllowed: 1, MaximumKbSize: 200, DescriptiveName: "gato_malo"},
@@ -83,27 +87,35 @@ func Test_CrudFILE(t *testing.T) {
 		}
 	)
 
+	err := fileserver.CreateFolderIfNotExist(root_test_folder)
+	if err != "" {
+		t.Fatal(err)
+		return
+	}
 	// DeleteUploadTestFiles
-	err := gotools.DeleteIfFolderSizeExceeds(root_test_folder, 0)
-	if err != nil {
-		log.Fatal(err)
+	err = fileserver.DeleteIfFolderSizeExceeds(root_test_folder, 0)
+	if err != "" {
+		t.Fatal(err)
+		return
 	}
 
-	err = gotools.CreateFolderIfNotExist(root_test_folder)
-	if err != nil {
-		log.Fatal(err)
-	}
+	const db_name = "stored_files_index.db"
+	// delete database
+	os.Remove(root_test_folder + "/" + db_name)
+
+	// Esperar brevemente la eliminación de la db antes de iniciar las pruebas
+	time.Sleep(100 * time.Millisecond)
 
 	for _, r := range testData {
 		t.Run((r.TestName), func(t *testing.T) {
 
 			h := &model.Handlers{
 				FileRootFolder:  root_test_folder,
-				DataBaseAdapter: sqlite.NewConnection(root_test_folder, "stored_files_index.db", false),
+				DataBaseAdapter: sqlite.NewConnection(root_test_folder, db_name, false),
 			}
 
 			app, err := testools.NewApiTestDefault(t, h)
-			if err != nil {
+			if err != "" {
 				t.Fatal(err)
 				return
 			}
@@ -112,9 +124,15 @@ func Test_CrudFILE(t *testing.T) {
 
 			// AGREGAR API FILE INPUT
 			_, err = fileinput.NewUploadFileApi(h, object, r.FileSetting)
-			if err != nil {
+			if err != "" {
 				t.Fatal(err)
 				return
+			}
+
+			for _, o := range h.GetObjects() {
+
+				fmt.Println("**OBJETO:", o.ObjectName)
+
 			}
 
 			//*** CREAR FORMULARIO PARA ENVIÓ
@@ -126,13 +144,13 @@ func Test_CrudFILE(t *testing.T) {
 			}
 
 			form, err := maps.BuildFormString(&new)
-			if err != nil {
+			if err != "" {
 				t.Fatal(err)
 				return
 			}
 
 			body, boundary, err := fileserver.MultiPartFileForm(path_files, r.Data, form)
-			if err != nil {
+			if err != "" {
 				t.Fatal(err)
 				return
 			}
@@ -141,7 +159,7 @@ func Test_CrudFILE(t *testing.T) {
 				boundary: body,
 			}
 
-			r.SendOneRequest(r.Method, app.BuildEndPoint(r.Request), r.Object, send, func(response []map[string]string, err error) {
+			r.SendOneRequest(r.Method, app.BuildEndPoint(r.Request), r.Object, send, func(response []map[string]string, err string) {
 				r.Analysis(&r.Request, response, err)
 			})
 

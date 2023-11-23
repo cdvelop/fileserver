@@ -1,19 +1,26 @@
 package fileserver_test
 
-import "github.com/cdvelop/testools"
+import (
+	"github.com/cdvelop/maps"
+	"github.com/cdvelop/testools"
+)
 
-func crudTestAnalysis(r *testools.Request, resp_create []map[string]string, err error) {
+func crudTestAnalysis(r *testools.Request, resp_create []map[string]string, err string) {
 	// create
 	var response any
-	if err != nil {
-		response = err.Error()
+	if err != "" {
+		response = err
 	} else {
 		response = resp_create
 	}
 
-	if !r.CheckTest(r.Expected, response) {
-		r.Fatal()
-		return
+	expected := r.Expected.([]map[string]string)
+
+	if !maps.AreSliceMapsIdentical(resp_create, expected) {
+		if !r.CheckTest(r.Expected, response, "EN CREATE***") {
+			r.Fatal()
+			return
+		}
 	}
 
 	// update
@@ -24,8 +31,8 @@ func crudTestAnalysis(r *testools.Request, resp_create []map[string]string, err 
 		v["description"] = "oso"
 	}
 
-	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_update []map[string]string, err error) {
-		if err != nil {
+	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_update []map[string]string, err string) {
+		if err != "" {
 			r.Fatal("no se esperaba error al actualizar", err)
 			return
 		}
@@ -34,8 +41,8 @@ func crudTestAnalysis(r *testools.Request, resp_create []map[string]string, err 
 
 	// read
 	endpoint = r.Server.URL + "/read"
-	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_read []map[string]string, err error) {
-		if err != nil {
+	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_read []map[string]string, err string) {
+		if err != "" {
 			r.Fatal("no se esperaba error al leer", err)
 			return
 		}
@@ -51,8 +58,8 @@ func crudTestAnalysis(r *testools.Request, resp_create []map[string]string, err 
 
 	// delete
 	endpoint = r.Server.URL + "/delete"
-	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_delete []map[string]string, err error) {
-		if err != nil {
+	r.SendOneRequest("POST", endpoint, r.Object, resp_create, func(resp_delete []map[string]string, err string) {
+		if err != "" {
 			r.Fatal("no se esperaba error al eliminar", err)
 			return
 		}

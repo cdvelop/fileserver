@@ -6,9 +6,9 @@ import (
 	"github.com/cdvelop/unixid"
 )
 
-func AddFileApi(h *model.Handlers) (*fileServer, error) {
+func AddFileApi(h *model.Handlers) (fs *fileServer, err string) {
 
-	fs := &fileServer{
+	fs = &fileServer{
 		FileHandler: nil,
 		input_id:    unixid.InputPK(),
 	}
@@ -16,10 +16,10 @@ func AddFileApi(h *model.Handlers) (*fileServer, error) {
 	h.FileDiskRW = fs
 
 	fh, err := filehandler.Add(h)
-	if err != nil {
+	if err != "" {
 		return nil, err
 	}
 	fs.FileHandler = fh
 
-	return fs, nil
+	return fs, ""
 }

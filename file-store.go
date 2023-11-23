@@ -8,23 +8,23 @@ import (
 	"github.com/cdvelop/filehandler"
 )
 
-func fileStoreInHDD(file multipart.File, upload_folder string, f *filehandler.File) error {
-
-	err := os.MkdirAll(upload_folder, os.ModePerm)
-	if err != nil {
-		return err
+func fileStoreInHDD(file multipart.File, upload_folder string, f *filehandler.File) (err string) {
+	const this = "fileStoreInHDD "
+	e := os.MkdirAll(upload_folder, os.ModePerm)
+	if e != nil {
+		return this + e.Error()
 	}
 
-	dst, err := os.Create(upload_folder + "/" + f.Id_file + f.Extension)
-	if err != nil {
-		return err
+	dst, er := os.Create(upload_folder + "/" + f.Id_file + f.Extension)
+	if er != nil {
+		return this + er.Error()
 	}
 	defer dst.Close()
 
-	_, err = io.Copy(dst, file)
-	if err != nil {
-		return err
+	_, er = io.Copy(dst, file)
+	if er != nil {
+		return this + er.Error()
 	}
 
-	return nil
+	return ""
 }
