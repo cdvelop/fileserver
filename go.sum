@@ -1,5 +1,7 @@
 github.com/cdvelop/output v0.0.16 h1:4hmAy0kF98dVEWj2qq6fMtiq3pz1ZTDmxf9AgHiBb7g=
 github.com/cdvelop/output v0.0.16/go.mod h1:J0NdlSxlURjPlX82VUmaq7o9Z4omOSH0yLUoioPdELc=
+github.com/cdvelop/wetest v0.0.2 h1:Ed7Ewzrqt8k1fu+wnYKcbdt3jda+SzN7ELSHVHSIzAE=
+github.com/cdvelop/wetest v0.0.2/go.mod h1:JsYX0GwPFjr70+zQdJXPc7ebMixWVrGrUSisz+V8wWA=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/mattn/go-sqlite3 v1.14.18 h1:JL0eqdCOq6DJVNPSvArO/bIV9/P7fbGrV00LZHc+5aI=

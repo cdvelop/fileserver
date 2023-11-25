@@ -1,13 +1,12 @@
 package fileserver
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"time"
 )
 
-func FindFilesWithNonZeroSize(dir string, filenames []string) error {
+func FindFilesWithNonZeroSize(dir string, filenames []string) (err string) {
 
 	// Esperar
 	time.Sleep(50 * time.Millisecond)
@@ -19,9 +18,9 @@ func FindFilesWithNonZeroSize(dir string, filenames []string) error {
 	}
 
 	// Recorre el directorio en busca de archivos
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
+	er := filepath.Walk(dir, func(path string, info os.FileInfo, er error) error {
+		if er != nil {
+			return er
 		}
 
 		// Comprueba si el archivo actual es uno de los que estamos buscando
@@ -33,25 +32,25 @@ func FindFilesWithNonZeroSize(dir string, filenames []string) error {
 		return nil
 	})
 
-	if err != nil {
-		return err
+	if er != nil {
+		return er.Error()
 	}
 
 	// Verifica que se encontraron todos los archivos y que tienen tamaño mayor que cero
 	for filename, ok := range found {
 		if !ok {
-			return fmt.Errorf("no se encontró el archivo %s", filename)
+			return "no se encontró el archivo " + filename
 		}
 
 	}
 
-	return nil
+	return ""
 }
 
-func FindFile(dir, file_name string) (content string, err error) {
+func FindFile(dir, file_name string) (content, err string) {
 
 	files, err := FileCheck(dir, file_name)
-	if err != nil {
+	if err != "" {
 		return "", err
 	}
 
@@ -60,21 +59,21 @@ func FindFile(dir, file_name string) (content string, err error) {
 
 			file_path := filepath.Join(dir, file.Name())
 
-			content, err := os.ReadFile(file_path)
-			if err != nil {
-				return "", err
+			content, er := os.ReadFile(file_path)
+			if er != nil {
+				return "", er.Error()
 			}
-			return string(content), nil
+			return string(content), ""
 		}
 	}
 
-	return "", fmt.Errorf("archivo %v no encontrado", file_name)
+	return "", "archivo " + file_name + " no encontrado"
 }
 
-func FindFirstFileWithExtension(dir, extension string) (content string, err error) {
+func FindFirstFileWithExtension(dir, extension string) (content, err string) {
 
 	files, err := FileCheck(dir, extension)
-	if err != nil {
+	if err != "" {
 		return "", err
 	}
 
@@ -86,15 +85,15 @@ func FindFirstFileWithExtension(dir, extension string) (content string, err erro
 		if extension == filepath.Ext(file.Name()) {
 			file_path := filepath.Join(dir, file.Name())
 
-			content, err := os.ReadFile(file_path)
-			if err != nil {
-				return "", err
+			content, er := os.ReadFile(file_path)
+			if er != nil {
+				return "", er.Error()
 			}
-			return string(content), nil
+			return string(content), ""
 
 		}
 
 	}
 
-	return "", fmt.Errorf("extension %v no encontrada", extension)
+	return "", "extension " + extension + " no encontrada"
 }

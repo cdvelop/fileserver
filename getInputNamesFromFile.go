@@ -8,10 +8,10 @@ import (
 )
 
 // ej files, .go, `Input: input\.(\w+)\(\)`
-func GetNamesFromDirectoryExtensionAndPattern(dir, ext, pattern string) (out []string, err error) {
+func GetNamesFromDirectoryExtensionAndPattern(dir, ext, pattern string) (out []string, err string) {
 
 	files, err := FileCheck(dir, pattern)
-	if err != nil {
+	if err != "" {
 		return nil, err
 	}
 
@@ -27,7 +27,7 @@ func GetNamesFromDirectoryExtensionAndPattern(dir, ext, pattern string) (out []s
 			file_path := filepath.Join(dir, file.Name())
 
 			new_names, err := GetNamesFromFileAndPattern(file_path, pattern)
-			if err != nil {
+			if err != "" {
 				return nil, err
 			}
 
@@ -48,15 +48,15 @@ func GetNamesFromDirectoryExtensionAndPattern(dir, ext, pattern string) (out []s
 		}
 	}
 
-	return out, nil
+	return out, ""
 }
 
 // ej files/file.txt, `Input: input\.(\w+)\(\)`
-func GetNamesFromFileAndPattern(file_path, pattern string) (out []string, err error) {
+func GetNamesFromFileAndPattern(file_path, pattern string) (out []string, err string) {
 
-	file, err := os.Open(file_path)
-	if err != nil {
-		return nil, err
+	file, er := os.Open(file_path)
+	if er != nil {
+		return nil, er.Error()
 	}
 	defer file.Close()
 
@@ -77,5 +77,5 @@ func GetNamesFromFileAndPattern(file_path, pattern string) (out []string, err er
 		}
 	}
 
-	return out, nil
+	return out, ""
 }

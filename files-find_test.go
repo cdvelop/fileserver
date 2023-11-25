@@ -12,7 +12,7 @@ func TestFindFilesWithNonZeroSize(t *testing.T) {
 	filenames := []string{"README.md", "go.mod"} // Archivos que estamos buscando
 
 	err := fileserver.FindFilesWithNonZeroSize(dir, filenames)
-	if err != nil {
+	if err != "" {
 		t.Errorf("Se produjo un error inesperado: %v", err)
 	}
 }
