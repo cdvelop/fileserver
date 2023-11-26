@@ -101,6 +101,7 @@ func Test_CrudFILE(t *testing.T) {
 
 	const db_name = "stored_files_index.db"
 	// delete database
+	time.Sleep(100 * time.Millisecond)
 	os.Remove(root_test_folder + "/" + db_name)
 
 	// Esperar brevemente la eliminación de la db antes de iniciar las pruebas

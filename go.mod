@@ -30,7 +30,7 @@ require (
 	github.com/cdvelop/fileinput v0.0.32
 	github.com/cdvelop/logserver v0.0.6 // indirect
 	github.com/cdvelop/maps v0.0.7
-	github.com/cdvelop/model v0.0.72
+	github.com/cdvelop/model v0.0.73
 	golang.org/x/net v0.18.0 // indirect
 )
 
