@@ -2,7 +2,6 @@ package fileserver
 
 import (
 	"fmt"
-	"log"
 	"os/exec"
 	"runtime"
 )
@@ -19,23 +18,24 @@ import (
 // Por su parte el modificador /z permitirá reanudar la copia en caso de que se produzca una interrupción,
 // ya sea por corte de energía u otro motivo.
 
-func CloneDirectory(origin, destiny string) {
+func CloneDirectory(origin, destiny string) (err string) {
 
 	switch runtime.GOOS {
 	case "windows":
-		cloneWindowsFolder(origin, destiny)
+		return cloneWindowsFolder(origin, destiny)
 	default:
-		fmt.Println("BACKUP ARCHIVOS LINUX NO IMPLEMENTADO")
+		return "BACKUP ARCHIVOS LINUX NO IMPLEMENTADO"
 	}
 
 }
 
-func cloneWindowsFolder(origin, destiny string) {
+func cloneWindowsFolder(origin, destiny string) (err string) {
 	var change = "sin cambios"
-	_, err := exec.Command("robocopy", origin, destiny, "/mir", "/z").Output()
-	if err != nil {
-		change = "archivos nuevos " + err.Error()
+	_, er := exec.Command("robocopy", origin, destiny, "/mir", "/z").Output()
+	if er != nil {
+		change = "archivos nuevos " + er.Error()
 	}
 
-	log.Printf(">>> RESPALDO DIRECTORIO: %v A: %v [%v]\n", origin, destiny, change)
+	fmt.Printf(">>> RESPALDO DIRECTORIO: %v A: %v [%v]\n", origin, destiny, change)
+	return
 }

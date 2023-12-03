@@ -5,26 +5,27 @@ import (
 	"os"
 )
 
-func CopyFile(src string, dest string) error {
+func CopyFile(src string, dest string) (err string) {
+	const this = "CopyFile error "
 	// Abrir el archivo origen
-	srcFile, err := os.Open(src)
-	if err != nil {
-		return err
+	srcFile, er := os.Open(src)
+	if er != nil {
+		return this + er.Error()
 	}
 	defer srcFile.Close()
 
 	// Crear el archivo destino
-	destFile, err := os.Create(dest)
-	if err != nil {
-		return err
+	destFile, er := os.Create(dest)
+	if er != nil {
+		return this + er.Error()
 	}
 	defer destFile.Close()
 
 	// Copiar el contenido del archivo origen al archivo destino
-	_, err = io.Copy(destFile, srcFile)
-	if err != nil {
-		return err
+	_, er = io.Copy(destFile, srcFile)
+	if er != nil {
+		err = this + er.Error()
 	}
 
-	return nil
+	return
 }

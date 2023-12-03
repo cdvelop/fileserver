@@ -9,18 +9,19 @@ import (
 
 // dir ej: modules/mymodule
 // ext ej: .js, .html, .css
-func ReadFiles(dir, ext string, buffer_out *bytes.Buffer) (err error) {
-	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
+func ReadFiles(dir, ext string, buffer_out *bytes.Buffer) (err string) {
+	const this = "ReadFiles error "
+	er := filepath.Walk(dir, func(path string, info os.FileInfo, er error) error {
+		if er != nil {
+			return er
 		}
 		if info.IsDir() {
 			return nil
 		}
 		if filepath.Ext(path) == ext {
-			file, err := os.Open(path)
-			if err != nil {
-				return err
+			file, er := os.Open(path)
+			if er != nil {
+				return er
 			}
 			defer file.Close()
 
@@ -29,34 +30,43 @@ func ReadFiles(dir, ext string, buffer_out *bytes.Buffer) (err error) {
 				buffer_out.Write(scanner.Bytes())
 				buffer_out.WriteString("\n")
 			}
-			if err := scanner.Err(); err != nil {
-				return err
+			if er := scanner.Err(); er != nil {
+				return er
 			}
 		}
 		return nil
 	})
+
+	if er != nil {
+		return this + er.Error()
+	}
+
+	return ""
+}
+
+func FileGet(file string, buffer_out *bytes.Buffer) (err string) {
+	const this = "FileGet error "
+
+	// Leemos el contenido del archivo
+	content, er := os.ReadFile(file)
+	if er != nil {
+		return this + er.Error()
+	}
+	// Escribimos el contenido en el buffer de salida
+	_, er = buffer_out.Write(content)
+	if er != nil {
+		err = this + er.Error()
+	}
 	return
 }
 
-func FileGet(file string, buffer_out *bytes.Buffer) error {
-	// Leemos el contenido del archivo
-	content, err := os.ReadFile(file)
-	if err != nil {
-		return err
-	}
-	// Escribimos el contenido en el buffer de salida
-	_, err = buffer_out.Write(content)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 // ej: dir/files, .svg
-func AddStringContendFromDirAndExtension(dir, ext string, out *string) error {
-	files, err := os.ReadDir(dir)
-	if err != nil {
-		return err
+func AddStringContendFromDirAndExtension(dir, ext string, out *string) (err string) {
+	const this = "AddStringContendFromDirAndExtension error "
+
+	files, er := os.ReadDir(dir)
+	if er != nil {
+		return this + er.Error()
 	}
 
 	for _, file := range files {
@@ -67,25 +77,25 @@ func AddStringContendFromDirAndExtension(dir, ext string, out *string) error {
 		if ext == filepath.Ext(file.Name()) {
 			file_path := filepath.Join(dir, file.Name())
 			// Leemos el contenido del archivo
-			content, err := os.ReadFile(file_path)
-			if err != nil {
-				return err
+			content, er := os.ReadFile(file_path)
+			if er != nil {
+				return this + er.Error()
 			}
 
 			*out += string(content) + "\n"
 		}
 	}
 
-	return nil
+	return ""
 }
 
-func AddStringContentFromFile(file_path string, out *string) error {
+func AddStringContentFromFile(file_path string, out *string) (err string) {
 	// Leemos el contenido del archivo
-	content, err := os.ReadFile(file_path)
-	if err == nil {
+	content, er := os.ReadFile(file_path)
+	if er == nil {
 		*out += string(content) + "\n"
-		return nil
+		return ""
 	}
 
-	return err
+	return "AddStringContentFromFile error " + er.Error()
 }

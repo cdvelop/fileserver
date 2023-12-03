@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/cdvelop/filehandler"
 	"github.com/cdvelop/fileinput"
@@ -29,7 +28,7 @@ func Test_CrudFILE(t *testing.T) {
 	object := &model.Object{
 		ObjectName: "patient",
 		Table:      "patient",
-		Module:     &model.Module{ModuleName: module_name, Title: "Modulo Testing", Areas: []byte{'s'}},
+		Module:     &model.Module{ModuleName: module_name, Title: "Modulo Testing", Areas: map[string]string{"s": "ok"}},
 	}
 
 	var (
@@ -100,12 +99,6 @@ func Test_CrudFILE(t *testing.T) {
 	}
 
 	const db_name = "stored_files_index.db"
-	// delete database
-	time.Sleep(100 * time.Millisecond)
-	os.Remove(root_test_folder + "/" + db_name)
-
-	// Esperar brevemente la eliminación de la db antes de iniciar las pruebas
-	time.Sleep(100 * time.Millisecond)
 
 	for _, r := range testData {
 		t.Run((r.TestName), func(t *testing.T) {
@@ -141,7 +134,7 @@ func Test_CrudFILE(t *testing.T) {
 				Module_name: object.ModuleName,
 				Field_name:  r.DescriptiveName,
 				Object_id:   testools.RandomNumber(),
-				File_area:   string(object.Areas[0]),
+				File_area:   object.Areas["s"],
 			}
 
 			form, err := maps.BuildFormString(&new)
@@ -167,4 +160,6 @@ func Test_CrudFILE(t *testing.T) {
 		})
 	}
 
+	// delete database
+	os.Remove(root_test_folder + "/" + db_name)
 }

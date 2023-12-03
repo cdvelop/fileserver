@@ -3,38 +3,39 @@ module github.com/cdvelop/fileserver
 go 1.20
 
 require (
-	github.com/cdvelop/sqlite v0.0.79
+	github.com/cdvelop/sqlite v0.0.81
 	github.com/cdvelop/strings v0.0.7
-	github.com/cdvelop/testools v0.0.41
-	github.com/cdvelop/unixid v0.0.21
+	github.com/cdvelop/testools v0.0.45
+	github.com/cdvelop/unixid v0.0.25
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 
 require (
-	github.com/cdvelop/api v0.0.61 // indirect
+	github.com/cdvelop/api v0.0.65 // indirect
 	github.com/cdvelop/cutkey v0.6.0 // indirect
-	github.com/cdvelop/dbtools v0.0.62 // indirect
-	github.com/cdvelop/input v0.0.55 // indirect
-	github.com/cdvelop/object v0.0.35 // indirect
-	github.com/cdvelop/objectdb v0.0.85 // indirect
+	github.com/cdvelop/dbtools v0.0.66 // indirect
+	github.com/cdvelop/input v0.0.59 // indirect
+	github.com/cdvelop/object v0.0.40 // indirect
+	github.com/cdvelop/objectdb v0.0.89 // indirect
 	github.com/cdvelop/output v0.0.16 // indirect
-	github.com/cdvelop/timeserver v0.0.20 // indirect
-	github.com/cdvelop/timetools v0.0.21 // indirect
-	github.com/cdvelop/wetest v0.0.2 // indirect
+	github.com/cdvelop/timeserver v0.0.24 // indirect
+	github.com/cdvelop/timetools v0.0.25 // indirect
 	github.com/mattn/go-sqlite3 v1.14.18 // indirect
 )
 
 require (
-	github.com/cdvelop/fetchserver v0.0.5 // indirect
-	github.com/cdvelop/filehandler v0.0.8
-	github.com/cdvelop/fileinput v0.0.32
-	github.com/cdvelop/logserver v0.0.6 // indirect
+	github.com/cdvelop/fetchserver v0.0.9 // indirect
+	github.com/cdvelop/filehandler v0.0.12
+	github.com/cdvelop/fileinput v0.0.36
+	github.com/cdvelop/logserver v0.0.10 // indirect
 	github.com/cdvelop/maps v0.0.7
-	github.com/cdvelop/model v0.0.73
-	golang.org/x/net v0.18.0 // indirect
+	github.com/cdvelop/model v0.0.75
+	golang.org/x/net v0.19.0 // indirect
 )
 
 replace github.com/cdvelop/model => ../model
+
+replace github.com/cdvelop/wetest => ../wetest
 
 replace github.com/cdvelop/timetools => ../timetools
 
