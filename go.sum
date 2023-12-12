@@ -1,5 +1,5 @@
-github.com/cdvelop/api v0.0.69 h1:UBYNIGWOKkcZnyfz96tVIw2q5BxxIr2hDYP9MBS9koA=
-github.com/cdvelop/api v0.0.69/go.mod h1:9RAc1vnvf6EPj/p2i6x120umNm9ldwpShS29TQlueyY=
+github.com/cdvelop/api v0.0.71 h1:X+p35ptmHZnZh2IkYJzGgbbKNLpVZ1wIodQXVyMGu1k=
+github.com/cdvelop/api v0.0.71/go.mod h1:QpBUMo8BG0+KJS9CC8LWFRbHPN/VwojZQUbbG71fybI=
 github.com/cdvelop/cutkey v1.0.0 h1:lv9njJ/QuB43OGB4LPDiutY4qvHOZ9RpV7cYaZ13pWM=
 github.com/cdvelop/cutkey v1.0.0/go.mod h1:h2/h8OzTRH16k3KzyBebAaX4LzM7W/pCGmip0ciYA80=
 github.com/cdvelop/dbtools v0.0.68 h1:AGEZDNeZGvi2Y4QMrJdQ1Opwh6eI8Mc/VebYnUrWpBA=
@@ -17,8 +17,8 @@ github.com/cdvelop/logserver v0.0.13 h1:duK4XxlUyqAUpKXgHGW1QidNdaB5N4feWBMQPSoK
 github.com/cdvelop/logserver v0.0.13/go.mod h1:KMOtKW6wM+ttuxB8W+AONqKa0Yll5xmSM79p+vZb3RY=
 github.com/cdvelop/maps v0.0.7 h1:2z8obanMy8d8LoSYngINQyiZvDC+2j9gntX0VbJ21kc=
 github.com/cdvelop/maps v0.0.7/go.mod h1:pxXQhqgImVse91Wn/nntebcBspDc4JKQv8NC3apxfLU=
-github.com/cdvelop/model v0.0.79 h1:u/19TV3tmPKRthozOgpoQr8Av6TMUoXw8ho3+eKFm+Y=
-github.com/cdvelop/model v0.0.79/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
+github.com/cdvelop/model v0.0.82 h1:IMNQVomtpvfRV6KEofUeKn01XFeCKodiBRyxJE4mdR4=
+github.com/cdvelop/model v0.0.82/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
 github.com/cdvelop/object v0.0.43 h1:QUvJGjB6qNrvBvBNLQOcf5vT+f2gQFW6gSHra35UzII=
 github.com/cdvelop/object v0.0.43/go.mod h1:L4sHJoTHCGKxDrzZE2uP5VCDxkX+SJs/nWHp+YL06Uo=
 github.com/cdvelop/objectdb v0.0.92 h1:IOkSWpe8n6AkKH2OqRsz7x5rOA49r8SNKucePsViu/4=
@@ -29,8 +29,8 @@ github.com/cdvelop/sqlite v0.0.84 h1:sLWcMS0tvuLIIvtK9AVzeoB3tsjNB54afYadWNobJgE
 github.com/cdvelop/sqlite v0.0.84/go.mod h1:1KAcT8Sg2SSqWTcARxPZt0VFAKZEcVXyON/U7ZXbm1w=
 github.com/cdvelop/strings v0.0.8 h1:liZNqboKkU3YpetJF/6FpWlWErSJfK7ISnIWD6SAf/E=
 github.com/cdvelop/strings v0.0.8/go.mod h1:zNexDeXHRETbMmlmNThQeM7ksRsvzrphsCfwuSxaURk=
-github.com/cdvelop/testools v0.0.50 h1:a9DbFE2meKzSj6H+Wz8MkPoAMX14J2SNaTpL+nu8zy8=
-github.com/cdvelop/testools v0.0.50/go.mod h1:E/1NTDNWrCV9jNXAaZK4/XT2Z/BEmbWmxC9Ldhg4i4o=
+github.com/cdvelop/testools v0.0.52 h1:V0QjnKrRSOYVGUjiroVeEGa2RDdbeohO/mCzD90DE1I=
+github.com/cdvelop/testools v0.0.52/go.mod h1:QTFrFLVIQcvd0TVIeAsY8RX9XaGsCjDa5hwviXzoBos=
 github.com/cdvelop/timeserver v0.0.27 h1:DyFQWNtVPLe8R0GIhlo9P4+biZQUsqxHkyzGZ5pWEAM=
 github.com/cdvelop/timeserver v0.0.27/go.mod h1:kivbdnmE/7zr5ULdU5cx1qG1Imwk/B3L28fOVvb1jP0=
 github.com/cdvelop/timetools v0.0.28 h1:deG3CoMbItderXCsR77aQK4t7beBocLQvollpoeZ32s=
