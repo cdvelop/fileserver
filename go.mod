@@ -18,7 +18,7 @@ require (
 	github.com/cdvelop/api v0.0.77 // indirect
 	github.com/cdvelop/cutkey v1.0.1 // indirect
 	github.com/cdvelop/dbtools v0.0.70 // indirect
-	github.com/cdvelop/fetchserver v0.0.14 // indirect
+	github.com/cdvelop/fetchserver v0.0.15 // indirect
 	github.com/cdvelop/input v0.0.66 // indirect
 	github.com/cdvelop/logserver v0.0.15 // indirect
 	github.com/cdvelop/object v0.0.49 // indirect
