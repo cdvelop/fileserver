@@ -1,5 +1,5 @@
-github.com/cdvelop/api v0.0.80 h1:K1x9zm/OyFzKEpM/bZmaF8aMgO4ukqSzpUxWVBMAExc=
-github.com/cdvelop/api v0.0.80/go.mod h1:9W47Y0LvORiVIGEXjBkbhlZChmwd8opy8ZTcznpsp1w=
+github.com/cdvelop/api v0.0.81 h1:lG2nezuUujCJAurXg9HaoZUzKN/NtKB6iManRwMRoao=
+github.com/cdvelop/api v0.0.81/go.mod h1:asDLOvItmV/HljJTd/ARb0iR/pKo2MFopOOzdu7QB10=
 github.com/cdvelop/cutkey v1.0.1 h1:ENcBzTYYGI0bBDl0bcJC17i9u9SHRWxuLpSN3iutqYg=
 github.com/cdvelop/cutkey v1.0.1/go.mod h1:xg546M226BOMRynqU1l9zPaMG9rJEmSEZCFAqvkd0CA=
 github.com/cdvelop/dbtools v0.0.70 h1:Ox994JZzx8a4TGEFc7wdmbcF28wt1R/ZygYc/qStLek=
@@ -8,8 +8,8 @@ github.com/cdvelop/fetchserver v0.0.15 h1:GXNrthgAMgIoDS1UgKYm7EslPgzwQdiQ7DET3p
 github.com/cdvelop/fetchserver v0.0.15/go.mod h1:qhOcKZY/hBWBSpo/ZQ5EEUn+i9qOsXJmfTm5Q93FCBg=
 github.com/cdvelop/filehandler v0.0.23 h1:bb7ekhWtczEyAesRohJgsB+0i68BNXApPFoi581hm/8=
 github.com/cdvelop/filehandler v0.0.23/go.mod h1:R+vY0aTY4IJpdhTQ/pioCCA27VmjPIPKi5qWEm/ncxs=
-github.com/cdvelop/fileinput v0.0.48 h1:3l1d9+41vLSRwihNKRvnx+1ccRw/HoPoefcNN149QDo=
-github.com/cdvelop/fileinput v0.0.48/go.mod h1:vjN/dAy0sld2IkEmDf5+nOk/VtJ9RwuffgYNFHLntp0=
+github.com/cdvelop/fileinput v0.0.49 h1:zT8Z5Om/8AUkVEYbikEhWPmU1z2YJHFS1T6tH0SFlb8=
+github.com/cdvelop/fileinput v0.0.49/go.mod h1:rTqj7zw+m/AWpcKxeIbn4BSoNHm0M2XnapnX4vynEOE=
 github.com/cdvelop/gotools v0.0.69 h1:msxkMP2hrKZkgIxF1XJfASosu/NeHMC/fwbuoIt6WXs=
 github.com/cdvelop/input v0.0.67 h1:69G8vK4Nn+kVMb+bF4TTKIiPjsjvoq4eYn9WgcQicSs=
 github.com/cdvelop/input v0.0.67/go.mod h1:ZjEAThue9JR2NvvAxgVBiGjwIi60KMnTowqOD1cyH3E=
@@ -29,8 +29,8 @@ github.com/cdvelop/sqlite v0.0.90 h1:epE3jylW3y2uTlMCPb/qU6vM7eWEK8PBJhk4SLbGIzA
 github.com/cdvelop/sqlite v0.0.90/go.mod h1:NdZt58gQVxGwQFE158xzNV7n8nr99ruV06lhZ5hRllA=
 github.com/cdvelop/strings v0.0.9 h1:yDh2msl3EQja0dHw+oOHfD9ymQMa50KakKTkjsXDnvw=
 github.com/cdvelop/strings v0.0.9/go.mod h1:zNexDeXHRETbMmlmNThQeM7ksRsvzrphsCfwuSxaURk=
-github.com/cdvelop/testools v0.0.62 h1:ZL9zVEJUSCDJ5vmYCj6yvBExdwOUVdjFFUzosNRIlBk=
-github.com/cdvelop/testools v0.0.62/go.mod h1:Ts/fGgNZPWKyJc8vamZV+8j/M4l4JOnMho0851iiAFA=
+github.com/cdvelop/testools v0.0.63 h1:pbvS+szGGMLZ/Pb3HckW7AY5F3vW/J+DPVz3vr3PM8Y=
+github.com/cdvelop/testools v0.0.63/go.mod h1:yUVtUO5fVMR9ska4msUkVgln7s0tSLACWIOTO1OrfZo=
 github.com/cdvelop/timeserver v0.0.31 h1:+Yt1ydpmtNDMJbFu29hcnmkwtK+BW+gBQyhbVVAvnHg=
 github.com/cdvelop/timeserver v0.0.31/go.mod h1:SlkQhKGvIxBfAlLDB3biA3JXbrvRRxwv28hyvfVMz0s=
 github.com/cdvelop/timetools v0.0.32 h1:tQPO4BwrEBrIGVMZHhsoYYeu8UXyF6hicm/Q54SET6k=
