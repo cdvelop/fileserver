@@ -9,13 +9,13 @@ require (
 	github.com/cdvelop/model v0.0.90
 	github.com/cdvelop/sqlite v0.0.88
 	github.com/cdvelop/strings v0.0.9
-	github.com/cdvelop/testools v0.0.59
+	github.com/cdvelop/testools v0.0.61
 	github.com/cdvelop/unixid v0.0.30
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 
 require (
-	github.com/cdvelop/api v0.0.77 // indirect
+	github.com/cdvelop/api v0.0.79 // indirect
 	github.com/cdvelop/cutkey v1.0.1 // indirect
 	github.com/cdvelop/dbtools v0.0.70 // indirect
 	github.com/cdvelop/fetchserver v0.0.15 // indirect
@@ -25,7 +25,7 @@ require (
 	github.com/cdvelop/objectdb v0.0.96 // indirect
 	github.com/cdvelop/output v0.0.16 // indirect
 	github.com/cdvelop/timeserver v0.0.29 // indirect
-	github.com/cdvelop/timetools v0.0.29 // indirect
+	github.com/cdvelop/timetools v0.0.30 // indirect
 	github.com/mattn/go-sqlite3 v1.14.18 // indirect
 	golang.org/x/net v0.19.0 // indirect
 )
