@@ -6,7 +6,7 @@ import (
 	"github.com/cdvelop/unixid"
 )
 
-func AddFileApi(h *model.Handlers) (fs *fileServer, err string) {
+func AddFileApi(h *model.MainHandler) (fs *fileServer, err string) {
 
 	fs = &fileServer{
 		FileHandler: nil,

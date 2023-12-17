@@ -103,7 +103,7 @@ func Test_CrudFILE(t *testing.T) {
 	for _, r := range testData {
 		t.Run((r.TestName), func(t *testing.T) {
 
-			h := &model.Handlers{
+			h := &model.MainHandler{
 				FileRootFolder:  root_test_folder,
 				DataBaseAdapter: sqlite.NewConnection(root_test_folder, db_name, false),
 			}
@@ -123,7 +123,7 @@ func Test_CrudFILE(t *testing.T) {
 				return
 			}
 
-			for _, o := range h.GetObjects() {
+			for _, o := range h.GetAllObjectsFromMainHandler() {
 
 				fmt.Println("**OBJETO:", o.ObjectName)
 
