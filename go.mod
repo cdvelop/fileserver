@@ -4,18 +4,18 @@ go 1.20
 
 require (
 	github.com/cdvelop/filehandler v0.0.32
-	github.com/cdvelop/fileinput v0.0.58
+	github.com/cdvelop/fileinput v0.0.59
 	github.com/cdvelop/maps v0.0.8
-	github.com/cdvelop/model v0.0.105
+	github.com/cdvelop/model v0.0.106
 	github.com/cdvelop/sqlite v0.0.100
 	github.com/cdvelop/strings v0.0.9
-	github.com/cdvelop/testools v0.0.75
+	github.com/cdvelop/testools v0.0.76
 	github.com/cdvelop/unixid v0.0.46
 	github.com/gabriel-vasile/mimetype v1.4.3
 )
 
 require (
-	github.com/cdvelop/api v0.0.95 // indirect
+	github.com/cdvelop/api v0.0.96 // indirect
 	github.com/cdvelop/cutkey v1.0.12 // indirect
 	github.com/cdvelop/dbtools v0.0.79 // indirect
 	github.com/cdvelop/fetchserver v0.0.24 // indirect
