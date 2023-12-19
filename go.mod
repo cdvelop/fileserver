@@ -3,7 +3,7 @@ module github.com/cdvelop/fileserver
 go 1.20
 
 require (
-	github.com/cdvelop/filehandler v0.0.31
+	github.com/cdvelop/filehandler v0.0.32
 	github.com/cdvelop/fileinput v0.0.58
 	github.com/cdvelop/maps v0.0.8
 	github.com/cdvelop/model v0.0.105
