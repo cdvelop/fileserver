@@ -25,13 +25,14 @@ func GetFile(path string) []byte {
 
 func (fileServer) FileDelete(path string) (err string) {
 
-	// fmt.Println("BORRANDO ARCHIVO EN EL SERVIDOR")
+	// fmt.Println("BORRANDO ARCHIVO EN EL SERVIDOR:", path)
 	// Borrar archivos desde hdd
 	e := os.Remove(path)
 	if e != nil {
 		// fmt.Println("ERROR AL BORRAR ARCHIVO EN EL SERVIDOR", err)
-		return "FileDelete error " + e.Error()
+		return e.Error()
 	}
+	// fmt.Println("BORRANDO ARCHIVO ok", e)
 
 	return ""
 }

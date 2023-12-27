@@ -61,8 +61,6 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		return nil, "valor campo object_id: " + x.FieldNameWithObjectID + " no enviado en formulario archivo"
 	}
 
-	upload_folder := f.UploadFolderPath(form_data)
-
 	for _, fileHeader := range files {
 		if fileHeader.Size > x.GetMaximumFileSize() {
 			return nil, "error archivo(s) excede(n) el tamaño admitido de: " + strconv.FormatInt(x.MaximumKbSize, 10) + "kb"
@@ -77,7 +75,7 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		id, description := f.BuildIDFileNameAndDescription(fileHeader.Filename)
 		// fmt.Println("NOMBRE DE ARCHIVO:", fileHeader.Filename)
 
-		new := filehandler.File{
+		new := &filehandler.File{
 			Id_file:     id,
 			Module_name: x.ModuleName,
 			Field_name:  x.DescriptiveName,
@@ -86,6 +84,8 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 			Extension:   getExtensionOnly(fileHeader),
 			Description: description,
 		}
+
+		upload_folder := f.UploadFolderPath(new)
 
 		var found_extension bool
 		for _, ext := range x.AllowedExtensions {
@@ -105,12 +105,12 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 			return nil, "file.Seek " + e.Error()
 		}
 
-		err = fileStoreInHDD(file, upload_folder, &new)
+		err = fileStoreInHDD(file, upload_folder, new)
 		if err != "" {
 			return nil, err
 		}
 
-		out, err := f.FileRegisterInDB(&new)
+		out, err := f.FileRegisterInDB(new)
 		if err != "" {
 			//borrar archivo creado en disco solo si corresponde
 			err2 := os.Remove(upload_folder + "/" + new.Id_file + new.Extension)
