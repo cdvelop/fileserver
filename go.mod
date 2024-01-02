@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/cdvelop/filehandler v0.0.38
-	github.com/cdvelop/fileinput v0.0.69
+	github.com/cdvelop/fileinput v0.0.70
 	github.com/cdvelop/maps v0.0.8
 	github.com/cdvelop/model v0.0.109
 	github.com/cdvelop/sqlite v0.0.104
