@@ -1,7 +1,6 @@
 package fileserver
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -32,14 +31,14 @@ func (f *fileServer) FileUpload(object_name, area_file string, request ...any) (
 		return nil, err
 	}
 
-	fmt.Println("CONFIGURACIONES:", x)
+	// fmt.Println("CONFIGURACIONES:", x)
 
 	form_data, err := multipartFormDataFile(x, r, w)
 	if err != "" {
 		return nil, err
 	}
 
-	fmt.Println("FORMULARIO ENVIADO:", form_data)
+	// fmt.Println("FORMULARIO ENVIADO:", form_data)
 
 	files := r.MultipartForm.File["files"]
 

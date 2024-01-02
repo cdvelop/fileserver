@@ -20,7 +20,7 @@ func (f fileServer) BuildIDFileNameAndDescription(header_name string) (id, descr
 	} else {
 		// de lo contrario es un id normal
 		id = header_name
-		description = header_name
+		// description = header_name
 	}
 
 	// 2- validamos si el id obtenido esta ok
