@@ -123,7 +123,7 @@ func Test_CrudFILE(t *testing.T) {
 				return
 			}
 
-			for _, o := range h.GetAllObjects() {
+			for _, o := range h.GetAllObjects(false) {
 
 				fmt.Println("**OBJETO:", o.ObjectName)
 
