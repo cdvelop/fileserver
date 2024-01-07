@@ -91,21 +91,23 @@ func Test_CrudFILE(t *testing.T) {
 		t.Fatal(err)
 		return
 	}
-	// DeleteUploadTestFiles
+
 	err = fileserver.DeleteIfFolderSizeExceeds(root_test_folder, 0)
 	if err != "" {
 		t.Fatal(err)
 		return
 	}
 
-	const db_name = "stored_files_index.db"
+	const db_name = "files.db"
+
+	db := sqlite.NewConnection(root_test_folder, db_name, false)
 
 	for _, r := range testData {
 		t.Run((r.TestName), func(t *testing.T) {
 
 			h := &model.MainHandler{
 				FileRootFolder:  root_test_folder,
-				DataBaseAdapter: sqlite.NewConnection(root_test_folder, db_name, false),
+				DataBaseAdapter: db,
 			}
 
 			app, err := testools.NewApiTestDefault(t, h)
@@ -129,7 +131,7 @@ func Test_CrudFILE(t *testing.T) {
 
 			}
 
-			//*** CREAR FORMULARIO PARA ENVIÓ
+			//*** CREAR FORMULARIO
 			new := filehandler.File{
 				Module_name: object.ModuleName,
 				Field_name:  r.DescriptiveName,
